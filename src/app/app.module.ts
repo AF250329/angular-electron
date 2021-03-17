@@ -15,6 +15,12 @@ import { HomeModule } from './home/home.module';
 import { DetailModule } from './detail/detail.module';
 
 import { AppComponent } from './app.component';
+import { GrpcCoreModule } from '@ngx-grpc/core';
+import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
+import { grpc } from '@improbable-eng/grpc-web';
+import { ImprobableEngGrpcWebClientModule } from '@ngx-grpc/improbable-eng-grpc-web-client';
+
+import { AppConfig } from '../environments/environment'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -27,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserModule,
     FormsModule,
     HttpClientModule,
+
     CoreModule,
     SharedModule,
     HomeModule,
@@ -38,7 +45,17 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
+    }),
+    GrpcCoreModule.forRoot(),
+    ImprobableEngGrpcWebClientModule.forRoot({
+      settings: {
+        host: AppConfig.GRPCWebServerAddress,
+        transport: grpc.CrossBrowserHttpTransport({}),
+      },
     })
+    // GrpcWebClientModule.forRoot({
+    //   settings: { host: 'http://localhost:30051' }
+    // })
   ],
   providers: [],
   bootstrap: [AppComponent]

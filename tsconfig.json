@@ -28,5 +28,9 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "enableIvy": true
+  }
 }

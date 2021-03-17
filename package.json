@@ -1,24 +1,17 @@
 {
-  "name": "angular-electron",
-  "version": "9.0.4",
-  "description": "Angular 11 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "VSTestServer.UI",
+  "version": "1.0.0",
+  "description": "WEb based manager for VSTest server",
+  "homepage": "https://github.com/AF250329/VSTestServer.UI",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Fusman Aleksandr",
+    "email": "aleksander.fusman@ncr.com"
   },
   "keywords": [
     "angular",
-    "angular 11",
     "electron",
-    "nodejs",
-    "typescript",
-    "spectron",
-    "eslint",
-    "sass",
-    "windows",
-    "mac",
-    "linux"
+    "vstest",
+    "test"
   ],
   "main": "main.js",
   "private": true,
@@ -38,9 +31,19 @@
     "test:watch": "ng test",
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "proto:generate": "for /f %G in ('dir /b ..\\VSTestServer\\grpc\\*.proto') do grpc_tools_node_protoc --plugin=protoc-gen-ts=.\\node_modules\\.bin\\protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:.\\src\\app\\proto --ts_out=service=grpc-web:.\\src\\app\\proto --plugin=protoc-gen-ng=.\\node_modules\\.bin\\protoc-gen-ng.cmd --ng_out=.\\src\\proto -I ..\\VSTestServer\\grpc %G"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@improbable-eng/grpc-web": "0.14.0",
+    "@ngx-grpc/common": "2.0.4",
+    "@ngx-grpc/core": "2.0.4",
+    "@ngx-grpc/grpc-web-client": "2.0.4",
+    "@ngx-grpc/improbable-eng-grpc-web-client": "2.0.4",
+    "@ngx-grpc/well-known-types": "2.0.4",
+    "google-protobuf": "3.15.6",
+    "grpc-web": "1.2.1"
+  },
   "devDependencies": {
     "@angular-builders/custom-webpack": "11.0.0",
     "@angular-devkit/build-angular": "0.1102.0",
@@ -59,8 +62,10 @@
     "@angular/platform-browser": "11.2.0",
     "@angular/platform-browser-dynamic": "11.2.0",
     "@angular/router": "11.2.0",
+    "@ngx-grpc/protoc-gen-ng": "2.0.4",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "6.0.0",
+    "@types/google-protobuf": "3.7.4",
     "@types/jasmine": "3.6.3",
     "@types/jasminewd2": "2.0.8",
     "@types/mocha": "8.2.0",
@@ -79,6 +84,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "31.6.1",
     "eslint-plugin-prefer-arrow": "1.2.3",
+    "grpc-tools": "1.10.0",
     "jasmine-core": "3.6.0",
     "jasmine-spec-reporter": "6.0.0",
     "karma": "6.1.1",
@@ -91,9 +97,10 @@
     "rxjs": "6.6.3",
     "spectron": "13.0.0",
     "ts-node": "9.1.1",
+    "ts-protoc-gen": "0.14.0",
     "tslib": "2.1.0",
     "typescript": "4.0.5",
-    "wait-on": "5.0.1",
+    "wait-on": "5.2.1",
     "webdriver-manager": "12.1.8",
     "zone.js": "0.10.3"
   },

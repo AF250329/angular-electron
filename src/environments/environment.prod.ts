@@ -1,4 +1,5 @@
 export const AppConfig = {
   production: true,
-  environment: 'PROD'
+  environment: 'PROD',
+  GRPCWebServerAddress: 'http://localhost:8080'
 };
