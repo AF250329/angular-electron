@@ -23,7 +23,11 @@ import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
 import { grpc } from '@improbable-eng/grpc-web';
 import { ImprobableEngGrpcWebClientModule } from '@ngx-grpc/improbable-eng-grpc-web-client';
 
-import { AppConfig } from '../environments/environment'
+import { AppConfig } from '../environments/environment';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { GlobalSettingsPageComponent } from './global-settings-page/global-settings-page.component';
+import { RunningTestsPageComponent } from './running-tests-page/running-tests-page.component';
+import { ReportsPageComponent } from './reports-page/reports-page.component'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -31,7 +35,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WelcomePageComponent, GlobalSettingsPageComponent, RunningTestsPageComponent, ReportsPageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
