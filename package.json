@@ -35,12 +35,18 @@
     "proto:generate": "for /f %G in ('dir /b ..\\VSTestServer\\grpc\\*.proto') do grpc_tools_node_protoc --plugin=protoc-gen-ts=.\\node_modules\\.bin\\protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:.\\src\\app\\proto --ts_out=service=grpc-web:.\\src\\app\\proto --plugin=protoc-gen-ng=.\\node_modules\\.bin\\protoc-gen-ng.cmd --ng_out=.\\src\\proto -I ..\\VSTestServer\\grpc %G"
   },
   "dependencies": {
+    "@angular/animations": "11.2.5",
+    "@cds/core": "5.0.3",
+    "@clr/angular": "5.0.3",
+    "@clr/icons": "5.0.3",
+    "@clr/ui": "5.0.3",
     "@improbable-eng/grpc-web": "0.14.0",
     "@ngx-grpc/common": "2.0.4",
     "@ngx-grpc/core": "2.0.4",
     "@ngx-grpc/grpc-web-client": "2.0.4",
     "@ngx-grpc/improbable-eng-grpc-web-client": "2.0.4",
     "@ngx-grpc/well-known-types": "2.0.4",
+    "@webcomponents/webcomponentsjs": "2.5.0",
     "google-protobuf": "3.15.6",
     "grpc-web": "1.2.1"
   },

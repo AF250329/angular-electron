@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import { ClarityModule } from '@clr/angular';
+
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-
 import { AppRoutingModule } from './app-routing.module';
 
 // NG Translate
@@ -13,8 +16,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HomeModule } from './home/home.module';
 import { DetailModule } from './detail/detail.module';
-
 import { AppComponent } from './app.component';
+
 import { GrpcCoreModule } from '@ngx-grpc/core';
 import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
 import { grpc } from '@improbable-eng/grpc-web';
@@ -31,8 +34,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+
+    ClarityModule,
 
     CoreModule,
     SharedModule,
@@ -46,6 +52,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
+
+
     GrpcCoreModule.forRoot(),
     ImprobableEngGrpcWebClientModule.forRoot({
       settings: {
@@ -53,9 +61,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         transport: grpc.CrossBrowserHttpTransport({}),
       },
     })
-    // GrpcWebClientModule.forRoot({
-    //   settings: { host: 'http://localhost:30051' }
-    // })
   ],
   providers: [],
   bootstrap: [AppComponent]
