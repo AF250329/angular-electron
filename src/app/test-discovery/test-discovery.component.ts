@@ -26,7 +26,7 @@ export class TestDiscoveryComponent implements OnInit {
 
   @Input() grpcServerAddress: string;
 
-  testCasesCollection$ = new Subject<VisualTest[]>();
+  testCasesCollection = new Array<VisualTest>();
   testCasesCollectionHasItems = false;
   loadingTests:boolean = false;
 
@@ -37,10 +37,12 @@ export class TestDiscoveryComponent implements OnInit {
 
   discoverTest(testPath: string) {
 
+    this.testCasesCollection.splice(0);
+    this.testCasesCollectionHasItems = false;
+    this.loadingTests = true;
+
     const sources = new Sources();
     sources.setPath(testPath);
-
-    this.loadingTests = true;
 
     grpc.invoke(VSTestServer.GetAllTest, {
       request: sources,
@@ -52,21 +54,22 @@ export class TestDiscoveryComponent implements OnInit {
           "id": testSpec.getId(),
           "FullyQualifiedName": testSpec.getFullyqualifiedname(),
           "DisplayName": testSpec.getDisplayname(),
-          "Source": testSpec.getSource(),
+          "OriginalSource": testSpec.getSource(),
+          "VisualSourceText": testSpec.getSource().substring(testSpec.getSource().lastIndexOf('\\') + 1),
           "CodeFilePath": testSpec.getCodefilepath(),
           "LineNumber": testSpec.getLinenumber(),
-          "Labels": new Array<VisualLabel>()
+          "Labels": Array<VisualLabel>()
         };
 
         testSpec.getLabelsList().forEach(element => {
           item.Labels.push({ "key":element.getKey(), "value": element.getValue()})
         });
 
-        this.testCasesCollection$.next([item]);
+        this.testCasesCollection.push(item);
 
-        this.testCasesCollectionHasItems = true;
+        // this.testCasesCollectionHasItems = true;
 
-        console.log("Item added");
+        // console.log("Item added");
       },
 
 
@@ -74,11 +77,10 @@ export class TestDiscoveryComponent implements OnInit {
         if(code == grpc.Code.OK) {
           // All ok
           console.log("Finished");
-          this.testCasesCollection$.complete();
+          this.testCasesCollectionHasItems = true;
           this.loadingTests = false;
         } else {
           console.error("error !");
-          this.testCasesCollection$.error("Error !");
           this.loadingTests = false;
         }
       }

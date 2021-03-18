@@ -7,7 +7,8 @@ export class VisualTest {
   id: string;
   FullyQualifiedName: string;
   DisplayName: string;
-  Source: string;
+  OriginalSource: string;
+  VisualSourceText: string;
   CodeFilePath: string;
   LineNumber: number;
   Labels: Array<VisualLabel>;
