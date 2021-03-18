@@ -1,0 +1,13 @@
+<div style="display: flex; align-items: center;">
+  <clr-select-container style="flex-grow: 4;margin-top: 0;margin-right: 12px;">
+    <label>Tests locations:</label>
+    <select clrSelect name="options" [(ngModel)]="selectedTestPath">
+      <option *ngFor="let path of pathsCollection" [value]="path.Location" style="width: 100%;">
+        {{ path.Location }}
+      </option>
+    </select>
+  </clr-select-container>
+  <div style="margin-left: auto;">
+    <button class="btn btn-primary" (click)="discoverTest(selectedTestPath)" [disabled]="selectedTestPath == '' ">Discover</button>
+  </div>
+</div>
