@@ -21,11 +21,15 @@ export class GlobalSettingsPageComponent implements OnInit {
 
   serverErrorOccurred: boolean;
   serverConnectionInProgress: boolean;
+  grpcServerAddress: string;
+
+  serverHealthStatus:ServerHealthStatus = null;
 
   constructor() {
 
     this.serverErrorOccurred = false;
     this.serverConnectionInProgress = false;
+    this.grpcServerAddress = '';
 
     this.targetServerForm.controls['serverAddress'].valueChanges.subscribe({
       next: (x) => this.serverErrorOccurred = false,
@@ -54,8 +58,10 @@ export class GlobalSettingsPageComponent implements OnInit {
 
           if (code == grpc.Code.OK) {
               // All ok
+              this.grpcServerAddress = this.targetServerForm.controls['serverAddress'].value;
           } else {
-            this.healthStatusError(code, msg, trailers);
+              this.grpcServerAddress = '';
+              this.healthStatusError(code, msg, trailers);
           }
         }
     });
@@ -66,7 +72,16 @@ export class GlobalSettingsPageComponent implements OnInit {
     this.targetServerForm.controls.serverAddress.setErrors({ invalidGrpcServer:true });
   }
 
-  showServerHealthStatus(serverHealthStatus: ServerHealthStatus) {
-
+  showServerHealthStatus(status: ServerHealthStatus) {
+    this.serverHealthStatus = status;
   }
+
+  prettySize(bytes:number, separator:string = ' '): string {
+    if (bytes) {
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.min(parseInt(Math.floor(Math.log(bytes) / Math.log(1024)).toString(), 10), sizes.length - 1);
+        return `${(bytes / (1024 ** i)).toFixed(i ? 1 : 0)}${separator}${sizes[i]}`;
+    }
+    return 'n/a';
+}
 }

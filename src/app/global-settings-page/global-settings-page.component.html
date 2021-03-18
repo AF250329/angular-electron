@@ -9,10 +9,34 @@
       <clr-control-error>Can not access provided GRPC server. Try again..</clr-control-error>
     </clr-input-container>
     <div style="margin-left: auto;">
-      <button class="btn btn-primary" style="align-items: inherit;" type="submit"[disabled]="!targetServerForm.valid">Set</button>
+      <button class="btn btn-primary" style="align-items: inherit;" type="submit" [disabled]="!targetServerForm.valid">Set</button>
     </div>
   </div>
   <div class="progress loop" style="margin-top: 1vh;" *ngIf="serverConnectionInProgress">
     <progress></progress>
   </div>
+  <table class="table" *ngIf="serverHealthStatus">
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th>OS</th>
+        <th>Platform</th>
+        <th>OS version</th>
+        <th>Memory</th>
+        <th>Running processes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ serverHealthStatus.getDomain() }}</td>
+        <td>{{ serverHealthStatus.getOsfullname() }}</td>
+        <td>{{ serverHealthStatus.getOsplatform() }}</td>
+        <td>{{ serverHealthStatus.getOsversion() }}</td>
+        <td>{{ prettySize(serverHealthStatus.getAvailablememory()) }} free of {{ prettySize(serverHealthStatus.getTotalmemory()) }}</td>
+        <td>{{ serverHealthStatus.getNumberofrunningprocesses() }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top: 4vw;"></p>
+  <app-test-discovery [grpcServerAddress]="grpcServerAddress" *ngIf="grpcServerAddress && targetServerForm.valid"></app-test-discovery>
 </form>
