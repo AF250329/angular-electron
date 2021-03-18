@@ -13,7 +13,7 @@
 </div>
 <div style="display: flex; align-items: center;" *ngIf="loadingTests">
   <clr-spinner [clrInline]="true"></clr-spinner>
-  <span style="margin-left: 12px;">Loaded {{ testCasesCollection.length }} elements</span>
+  <span style="margin-left: 20px;" [@tada]="animationState" (@tada.done)="onAnimationDone($event)"  >Loaded {{ testCasesCollection.length }} test's...</span>
 </div>
 
 <clr-datagrid *ngIf="testCasesCollectionHasItems">

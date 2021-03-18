@@ -2,22 +2,34 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AppConfig } from '../../environments/environment';
 
 import { grpc } from "@improbable-eng/grpc-web";
-import { Empty } from "google-protobuf/google/protobuf/empty_pb";
-import { VSTestServer, VSTestServerClient } from '../proto/VTestService_pb_service';
-import { Sources, TestSpec, TestSpecCollection } from '../proto/VTestService_pb';
-import { Subject } from 'rxjs';
+import { VSTestServer } from '../proto/VTestService_pb_service';
+import { Sources, TestSpec } from '../proto/VTestService_pb';
 import { VisualLabel, VisualTest } from './visual-test';
+
+import { trigger, transition, useAnimation, state, style } from '@angular/animations';
+import { rubberBand } from 'ng-animate';
 
 
 @Component({
   selector: 'app-test-discovery',
   templateUrl: './test-discovery.component.html',
-  styleUrls: ['./test-discovery.component.scss']
+  styleUrls: ['./test-discovery.component.scss'],
+  animations: [
+    trigger('tada', [
+      state('inactive', style({ opacity: 1 })),
+      state('active', style({ opacity: 1 })),
+      transition('* => *', useAnimation(rubberBand, {
+      // Set the duration to 180 seconds and delay to 2seconds
+      // params: { timing: 180, delay: 0 }
+    }))])
+  ],
 })
 export class TestDiscoveryComponent implements OnInit {
 
   selectedTestPath:string = '';
   selectedId:string = '1';
+  tada = false;
+  animationState:string = 'inactive';
 
   pathsCollection = [
     { id:1, Location: AppConfig.TestPath1 },
@@ -35,11 +47,17 @@ export class TestDiscoveryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onAnimationDone($event) {
+    this.animationState =  this.animationState === 'active' ? 'inactive' : 'active';
+  }
+
   discoverTest(testPath: string) {
 
     this.testCasesCollection.splice(0);
     this.testCasesCollectionHasItems = false;
     this.loadingTests = true;
+
+    this['tada'] = false;
 
     const sources = new Sources();
     sources.setPath(testPath);

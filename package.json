@@ -48,7 +48,8 @@
     "@ngx-grpc/well-known-types": "2.0.4",
     "@webcomponents/webcomponentsjs": "2.5.0",
     "google-protobuf": "3.15.6",
-    "grpc-web": "1.2.1"
+    "grpc-web": "1.2.1",
+    "ng-animate": "1.0.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "11.0.0",
