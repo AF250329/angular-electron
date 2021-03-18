@@ -1,4 +1,4 @@
-<div style="display: flex; align-items: center;">
+<div style="display: flex; align-items: center;" *ngIf="!loadingTests">
   <clr-select-container style="flex-grow: 4;margin-top: 0;margin-right: 12px;">
     <label>Tests locations:</label>
     <select clrSelect name="options" [(ngModel)]="selectedTestPath">
@@ -11,3 +11,26 @@
     <button class="btn btn-primary" (click)="discoverTest(selectedTestPath)" [disabled]="selectedTestPath == '' ">Discover</button>
   </div>
 </div>
+<clr-spinner [clrInline]="true" *ngIf="loadingTests">Loading ...</clr-spinner>
+
+<clr-datagrid *ngIf="testCasesCollectionHasItems">
+  <clr-dg-column>ID</clr-dg-column>
+  <clr-dg-column>Display name</clr-dg-column>
+  <clr-dg-column>Fully qualified name</clr-dg-column>
+  <clr-dg-column>Source</clr-dg-column>
+  <clr-dg-column>Code file path</clr-dg-column>
+  <clr-dg-column>Line number</clr-dg-column>
+  <clr-dg-column>Labels</clr-dg-column>
+
+  <clr-dg-row *ngFor="let visualTest of (testCasesCollection$ | async)">
+    <clr-dg-cell>{{visualTest.id}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.DisplayName}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.FullyQualifiedName}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.Source}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.CodeFilePath}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.LineNumber}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.Labels}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <!-- <clr-dg-footer>{{users.length}} users</clr-dg-footer> -->
+</clr-datagrid>
