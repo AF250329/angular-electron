@@ -1,3 +1,18 @@
 <h1>Global settings</h1>
 
 
+<form clrForm [formGroup]="targetServerForm" (ngSubmit)="onSubmit()">
+  <div style="display: flex; align-items: center;">
+    <clr-input-container style="flex-grow: 4; margin-top: 0; margin-right: 12px;">
+      <label for="serverAddress" class="clr-control-label">GRPC server URL</label>
+      <input clrInput type="text" id="serverAddress" placeholder="Enter Test server URL" formControlName="serverAddress" style="width: 100%;" />
+      <clr-control-error>Can not access provided GRPC server. Try again..</clr-control-error>
+    </clr-input-container>
+    <div style="margin-left: auto;">
+      <button class="btn btn-primary" style="align-items: inherit;" type="submit"[disabled]="!targetServerForm.valid">Set</button>
+    </div>
+  </div>
+  <div class="progress loop" style="margin-top: 1vh;" *ngIf="serverConnectionInProgress">
+    <progress></progress>
+  </div>
+</form>
