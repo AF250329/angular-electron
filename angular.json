@@ -28,10 +28,9 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
-              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
-              "node_modules/@clr/icons/clr-icons.min.js",
-              "@cds/core/divider/register.js"
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"
+              , "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"
+              , "node_modules/@clr/icons/clr-icons.min.js"
             ],
             "customWebpackConfig": {
               "path": "./angular.webpack.js"
