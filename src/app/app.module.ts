@@ -28,7 +28,8 @@ import { AppConfig } from '../environments/environment';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { GlobalSettingsPageComponent } from './global-settings-page/global-settings-page.component';
 import { RunningTestsPageComponent } from './running-tests-page/running-tests-page.component';
-import { ReportsPageComponent } from './reports-page/reports-page.component'
+import { ReportsPageComponent } from './reports-page/reports-page.component';
+import { TestDiscoveryComponent } from './test-discovery/test-discovery.component'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -36,7 +37,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, WelcomePageComponent, GlobalSettingsPageComponent, RunningTestsPageComponent, ReportsPageComponent],
+  declarations: [AppComponent, WelcomePageComponent, GlobalSettingsPageComponent, RunningTestsPageComponent, ReportsPageComponent, TestDiscoveryComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
