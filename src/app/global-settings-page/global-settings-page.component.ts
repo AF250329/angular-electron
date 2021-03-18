@@ -83,5 +83,5 @@ export class GlobalSettingsPageComponent implements OnInit {
         return `${(bytes / (1024 ** i)).toFixed(i ? 1 : 0)}${separator}${sizes[i]}`;
     }
     return 'n/a';
-}
+  }
 }
