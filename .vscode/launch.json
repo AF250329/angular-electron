@@ -5,6 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
+          "name": "Angular",
+          "type": "chrome",
+          "request": "launch",
+          "preLaunchTask": "npm: start",
+          "url": "http://localhost:4200/#",
+          "cwd": "${workspaceFolder}",
+          "webRoot": "${workspaceFolder}",
+          "sourceMapPathOverrides": {
+            "webpack:/*": "${webRoot}/*",
+            "/./*": "${webRoot}/*",
+            "/src/*": "${webRoot}/*",
+            "/*": "*",
+            "/./~/*": "${webRoot}/node_modules/*"
+          }
+        }, {
             "name": "Electron Main Renderer",
             "type": "node",
             "request": "launch",
@@ -31,6 +46,6 @@
             "timeout": 30000,
             "trace": true
         }
-        
+
     ]
 }

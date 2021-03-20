@@ -1,5 +1,5 @@
 {
-  "name": "VSTestServer.UI",
+  "name": "vstest-manager",
   "version": "1.0.0",
   "description": "WEb based manager for VSTest server",
   "homepage": "https://github.com/AF250329/VSTestServer.UI",
