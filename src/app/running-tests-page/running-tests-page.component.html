@@ -1,1 +1,58 @@
-<p>running-tests-page works!</p>
+<div class="clr-row">
+  <div class="clr-col-2">
+    <label>{{ grpcServerAddress }} </label>
+  </div>
+  <div class="clr-col-lg-auto">
+    <span></span>
+  </div>
+  <div class="clr-col-1">
+    <button class="btn btn-primary" (click)="refreshData()" >Refresh</button>
+  </div>
+</div>
+<div class="clr-row">
+  <div class="clr-col-2">
+    <label>Left to run: {{testsLeftToRun}}</label>
+  </div>
+  <div class="clr-col-2">
+    <label>Finished to run: {{testFinishedAll}}</label>
+  </div>
+  <div class="clr-col-2">
+    <label>Finished with errors: {{testFinishedError}}</label>
+  </div>
+  <div class="clr-col-2">
+    <label>Finished success: {{testFinishedSuccess}}</label>
+  </div>
+  <div class="clr-col-2">
+    <label>Running for: {{testProcessRuntime}}</label>
+  </div>
+</div>
+<div class="clr-row">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Worker IP
+        </th>
+        <th>
+          Test name
+        </th>
+        <th>
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of runningTestsItemsCollection">
+          <td>
+            {{ row.ipAddress }}
+          </td>
+          <td>
+            {{ row.testDisplayName }}
+          </td>
+          <td>
+            {{ row.testStatus }}
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

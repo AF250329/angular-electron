@@ -52,6 +52,7 @@ export class GlobalSettingsPageComponent implements OnInit {
           this.serverConnectionInProgress = false;
 
           this.showServerHealthStatus(serverHealthStatus)
+          AppConfig.GRPCWebServerAddress = this.targetServerForm.controls['serverAddress'].value;
         },
         onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
           this.serverConnectionInProgress = false;
