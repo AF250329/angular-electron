@@ -76,6 +76,9 @@ export class RunningTestsPageComponent implements OnInit {
             case 5:
               newRunTest.testStatus = "finish with errors"
               break;
+            case 6:
+              newRunTest.testStatus = "waiting for GPos Web Server"
+              break;
 
             default:
               break;
