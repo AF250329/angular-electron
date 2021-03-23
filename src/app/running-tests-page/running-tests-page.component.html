@@ -1,9 +1,9 @@
 <div class="clr-row">
-  <div class="clr-col-2">
-    <label>{{ grpcServerAddress }} </label>
+  <div class="clr-col-3">
+    <label>Tests server address: {{ grpcServerAddress }} </label>
   </div>
-  <div class="clr-col-lg-auto">
-    <span></span>
+  <div class="clr-col-8">
+    <span>&nbsp;</span>
   </div>
   <div class="clr-col-1">
     <button class="btn btn-primary" (click)="refreshData()" >Refresh</button>
@@ -11,10 +11,10 @@
 </div>
 <div class="clr-row">
   <div class="clr-col-2">
-    <label>Left to run: {{testsLeftToRun}}</label>
+    <label>Tests left to run: {{testsLeftToRun}}</label>
   </div>
   <div class="clr-col-2">
-    <label>Finished to run: {{testFinishedAll}}</label>
+    <label>Finished: {{testFinishedAll}}</label>
   </div>
   <div class="clr-col-2">
     <label>Finished with errors: {{testFinishedError}}</label>
