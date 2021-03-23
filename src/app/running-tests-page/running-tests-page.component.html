@@ -31,6 +31,9 @@
     <thead>
       <tr>
         <th>
+          Index
+        </th>
+        <th>
           Worker IP
         </th>
         <th>
@@ -42,7 +45,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of runningTestsItemsCollection">
+      <tr *ngFor="let row of runningTestsItemsCollection; let i = index">
+          <td>
+            {{ i + 1 }}
+          </td>
           <td>
             {{ row.ipAddress }}
           </td>
