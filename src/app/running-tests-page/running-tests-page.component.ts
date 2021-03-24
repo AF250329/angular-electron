@@ -80,6 +80,7 @@ export class RunningTestsPageComponent implements OnInit {
               newRunTest.testStatus = "waiting for GPos Web Server"
               break;
 
+
             default:
               break;
           }
