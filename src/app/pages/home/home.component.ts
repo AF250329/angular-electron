@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 // import { Sources } from '../../proto/vtest-service.pb';
 // import { VSTestServerClient } from '../../proto/vtest-service.pbsc';
 
-import { VSTestServer } from '../proto/VTestService_pb_service';
-import { Sources } from '../proto/VTestService_pb';
-import { AppConfig } from '../../environments/environment';
+import { VSTestServer } from '../../proto/VTestService_pb_service';
+import { Sources } from '../../proto/VTestService_pb';
+import { AppConfig } from '../../../environments/environment';
 
 import {grpc} from "@improbable-eng/grpc-web";
 

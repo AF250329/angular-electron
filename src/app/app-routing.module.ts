@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
 
-import { HomeRoutingModule } from './home/home-routing.module';
-import { DetailRoutingModule } from './detail/detail-routing.module';
-
-import { WelcomePageComponent } from './welcome-page/welcome-page.component';
-import { GlobalSettingsPageComponent } from './global-settings-page/global-settings-page.component';
-import { RunningTestsPageComponent } from './running-tests-page/running-tests-page.component';
-import { ReportsPageComponent } from './reports-page/reports-page.component';
+import {
+        WelcomePageComponent,
+        GlobalSettingsPageComponent,
+        RunningTestsPageComponent,
+        ReportsPageComponent
+      } from './pages';
 
 const routes: Routes = [
   {
@@ -37,8 +36,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
-    HomeRoutingModule,
-    DetailRoutingModule
   ],
   exports: [RouterModule]
 })

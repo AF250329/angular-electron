@@ -1,23 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { ClarityModule } from '@clr/angular';
 
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
+import { ComponentsModule } from './components/components.module';
+import { PagesModule } from './pages/pages.module';
+import { AppComponent } from './app.component';
+
 import { AppRoutingModule } from './app-routing.module';
+import { VSTestMainService } from './services';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { HomeModule } from './home/home.module';
-import { DetailModule } from './detail/detail.module';
-import { AppComponent } from './app.component';
+
 
 import { GrpcCoreModule } from '@ngx-grpc/core';
 import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
@@ -25,11 +25,7 @@ import { grpc } from '@improbable-eng/grpc-web';
 import { ImprobableEngGrpcWebClientModule } from '@ngx-grpc/improbable-eng-grpc-web-client';
 
 import { AppConfig } from '../environments/environment';
-import { WelcomePageComponent } from './welcome-page/welcome-page.component';
-import { GlobalSettingsPageComponent } from './global-settings-page/global-settings-page.component';
-import { RunningTestsPageComponent } from './running-tests-page/running-tests-page.component';
-import { ReportsPageComponent } from './reports-page/reports-page.component';
-import { TestDiscoveryComponent } from './test-discovery/test-discovery.component'
+import { ElectronService } from './core/services';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -37,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, WelcomePageComponent, GlobalSettingsPageComponent, RunningTestsPageComponent, ReportsPageComponent, TestDiscoveryComponent],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -47,10 +43,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
     ClarityModule,
 
-    CoreModule,
-    SharedModule,
-    HomeModule,
-    DetailModule,
+    ComponentsModule,
+    PagesModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
@@ -69,7 +63,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       },
     })
   ],
-  providers: [],
+  providers: [
+      ElectronService,
+      VSTestMainService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppConfig } from '../../environments/environment';
+import { AppConfig } from '../../../environments/environment';
 
 import { grpc } from "@improbable-eng/grpc-web";
-import { VSTestServer } from '../proto/VTestService_pb_service';
-import { Sources, TestSpec } from '../proto/VTestService_pb';
+import { VSTestServer } from '../../proto/VTestService_pb_service';
+import { Sources, TestSpec } from '../../proto/VTestService_pb';
 import { VisualLabel, VisualTest } from './visual-test';
 
 import { trigger, transition, useAnimation, state, style } from '@angular/animations';
