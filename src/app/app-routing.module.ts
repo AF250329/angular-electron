@@ -20,6 +20,12 @@ const routes: Routes = [
     component: GlobalSettingsPageComponent
   },
   {
+    path: 'tests',
+    loadChildren: () => import('./pages/tests-managment/tests-managment.module').then(m =>
+      m.TestsManagmentModule),
+      data: { preload: true}
+  },
+  {
     path: 'status',
     component: RunningTestsPageComponent
   },

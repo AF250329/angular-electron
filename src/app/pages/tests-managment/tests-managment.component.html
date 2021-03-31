@@ -1,0 +1,8 @@
+<clr-select-container>
+  <label>Available tests:</label>
+  <select clrSelect id="availableTestsList" name="options" [(ngModel)]="selectedTest">
+    <option *ngFor="let singleTest of availableTests; let i = index" [value]="singleTest.name">{{ singleTest.name }}</option>
+  </select>
+</clr-select-container>
+
+<router-outlet></router-outlet>

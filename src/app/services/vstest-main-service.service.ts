@@ -15,6 +15,7 @@ import { VisualStorageItem } from './storage-item';
 export class VSTestMainService {
 
   grpcServerAddress: string = '';
+  selectedTestsFiles:Array<VisualStorageItem> = new Array<VisualStorageItem>();
 
   constructor() {
     this.grpcServerAddress = AppConfig.GRPCWebServerAddress;
@@ -101,6 +102,8 @@ export class VSTestMainService {
   }
 
   setTestsFiles(collection:Array<VisualStorageItem>) {
+    this.selectedTestsFiles.splice(0);
+    collection.forEach(x => this.selectedTestsFiles.push(x));
 
   }
 }
