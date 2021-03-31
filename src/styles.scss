@@ -32,3 +32,15 @@
 .modal-body {
   margin-top: 1.2rem;
 }
+
+clr-select-container.clr-form-control {
+  flex-direction: unset;
+}
+
+clr-select-container.clr-form-control .clr-control-container {
+  flex-grow: 2;
+}
+
+#availableTestsList {
+  margin-left: 2vw;
+}
