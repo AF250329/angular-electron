@@ -53,6 +53,6 @@ export class StorageBrowserComponent implements OnInit {
 
     this.grpcServer.setTestsFiles(selectedItems);
 
-    this.router.navigate(['/']);
+    this.router.navigate(['/tests']);
   }
 }
