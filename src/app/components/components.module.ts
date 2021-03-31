@@ -6,11 +6,13 @@ import { ClarityModule } from '@clr/angular';
 
 import { ServerHealthComponent } from './server-health/server-health.component';
 import { TestDiscoveryComponent } from './test-discovery/test-discovery.component';
+import { StorageBrowserComponent } from './storage-browser/storage-browser.component';
 
 @NgModule({
   declarations: [
     ServerHealthComponent,
-    TestDiscoveryComponent
+    TestDiscoveryComponent,
+    StorageBrowserComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { TestDiscoveryComponent } from './test-discovery/test-discovery.componen
   ],
   exports: [
     ServerHealthComponent,
-    TestDiscoveryComponent
+    TestDiscoveryComponent,
+    StorageBrowserComponent
   ]
 })
 export class ComponentsModule { }

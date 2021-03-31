@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { AppConfig } from '../../../environments/environment';
 
-import { ServerHealthStatus } from '../../proto/VTestService_pb';
-import { VSTestMainService } from '../../services';
-
 @Component({
   selector: 'app-global-settings-page',
   templateUrl: './global-settings-page.component.html',
@@ -14,9 +11,15 @@ export class GlobalSettingsPageComponent implements OnInit {
 
   serverAddress: string = AppConfig.GRPCWebServerAddress;
 
-  constructor(private grpcServer: VSTestMainService) {
+  connectedAddress:string = '';
+
+  constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  setAddress(address) {
+    this.connectedAddress = address;
   }
 }

@@ -1,1 +1,2 @@
-<app-server-health [initialAddress]="serverAddress"></app-server-health>
+<app-server-health [initialAddress]="serverAddress" (connectedAddress)="setAddress($event)"></app-server-health>
+<app-storage-browser *ngIf="connectedAddress"></app-storage-browser>

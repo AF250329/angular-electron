@@ -1,0 +1,34 @@
+<div class="clr-row">
+  <div class="clr-col-12">
+    <div class="card">
+      <div class="card-header">
+        Tests files
+      </div>
+      <div class="card-block">
+        <div class="card-text">
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-link" (click)="addNewFile()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="openModal">
+  <div class="modal-dialog modal-xl" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <h3 class="modal-title">Google Storage files browser for bucket: integration-tests-cache</h3>
+      <div class="modal-body">
+        <clr-spinner [clrMedium]="true">Loading ...</clr-spinner>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)='refresh()'>Reload</button>
+        <button type="button" class="btn btn-outline" (click)="openModal = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="openModal = false">Ok</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade in" aria-hidden="true"></div>
+</div>
+

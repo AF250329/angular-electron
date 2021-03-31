@@ -1,9 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-import { AppConfig } from '../../../environments/environment';
 
 import { ServerHealthStatus } from '../../proto/VTestService_pb';
 import { VSTestMainService } from '../../services';
@@ -20,6 +17,8 @@ export class ServerHealthComponent implements OnInit {
   set initialAddress(initialAddress:string ){
     this.grpcServerAddress = initialAddress;
   }
+
+  @Output() connectedAddress = new EventEmitter();
 
   serverConnectionInProgress:Subject<boolean> = new Subject<boolean>();
   connectionErrorOccurred:boolean;
@@ -57,6 +56,8 @@ export class ServerHealthComponent implements OnInit {
         _this.connectionErrorOccurred = false;
 
         _this.serverHealthStatus = serverInformation;
+
+        _this.connectedAddress.emit(_this.grpcServerAddress);
       },
       error(errMessage) {
         _this.serverConnectionInProgress.next(false);
@@ -64,8 +65,9 @@ export class ServerHealthComponent implements OnInit {
         _this.connectionErrorMessage = errMessage;
         _this.connectionErrorOccurred = true;
 
-
         _this.serverHealthStatus = null;
+
+        _this.connectedAddress.emit('');
       },
       complete() {
         _this.serverConnectionInProgress.next(false);
