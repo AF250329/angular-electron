@@ -32,10 +32,12 @@
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "ng lint",
-    "proto:generate": "for /f %G in ('dir /b ..\\VSTestServer\\grpc\\*.proto') do grpc_tools_node_protoc --plugin=protoc-gen-ts=.\\node_modules\\.bin\\protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:.\\src\\app\\proto --ts_out=service=grpc-web:.\\src\\app\\proto --plugin=protoc-gen-ng=.\\node_modules\\.bin\\protoc-gen-ng.cmd --ng_out=.\\src\\proto -I ..\\VSTestServer\\grpc %G"
+    "proto:generate": "for /f %G in ('dir /b ..\\VSTestServer\\grpc\\*.proto') do grpc_tools_node_protoc --plugin=protoc-gen-ts=.\\node_modules\\.bin\\protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:.\\src\\app\\proto --ts_out=service=grpc-web:.\\src\\app\\proto -I ..\\VSTestServer\\grpc %G"
   },
   "dependencies": {
     "@angular/animations": "11.2.5",
+    "@cds/angular": "5.1.0",
+    "@cds/city": "1.1.0",
     "@cds/core": "5.0.3",
     "@clr/angular": "5.0.3",
     "@clr/icons": "5.0.3",
