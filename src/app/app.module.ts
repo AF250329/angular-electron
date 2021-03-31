@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { ClarityModule } from '@clr/angular';
+import { CdsModule } from '@cds/angular';
 
 import { ComponentsModule } from './components/components.module';
 import { PagesModule } from './pages/pages.module';
@@ -32,6 +33,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+import '@cds/core/alert/register.js';
+
 @NgModule({
   declarations: [ AppComponent ],
   imports: [
@@ -42,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ReactiveFormsModule,
 
     ClarityModule,
+    CdsModule,
 
     ComponentsModule,
     PagesModule,

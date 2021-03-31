@@ -31,74 +31,74 @@ export class RunningTestsPageComponent implements OnInit {
   refreshData() {
     this.grpcServerAddress = AppConfig.GRPCWebServerAddress;
 
-    grpc.invoke(VSTestServer.GetRunningTest, {
-      host: AppConfig.GRPCWebServerAddress,
-      request: new Empty(),
-      onMessage: (runningTests: RunningTests) => {
+    // grpc.invoke(VSTestServer.GetRunningTest, {
+    //   host: AppConfig.GRPCWebServerAddress,
+    //   request: new Empty(),
+    //   onMessage: (runningTests: RunningTests) => {
 
-        this.testsLeftToRun = runningTests.getLefttorun();
-        this.testFinishedAll = runningTests.getTestsallfinished();
-        this.testFinishedError = runningTests.getTestfinishederror();
-        this.testFinishedSuccess = runningTests.getTestfinishedsucess();
-        this.testProcessRuntime = runningTests.getRunningtime();
+    //     this.testsLeftToRun = runningTests.getLefttorun();
+    //     this.testFinishedAll = runningTests.getTestsallfinished();
+    //     this.testFinishedError = runningTests.getTestfinishederror();
+    //     this.testFinishedSuccess = runningTests.getTestfinishedsucess();
+    //     this.testProcessRuntime = runningTests.getRunningtime();
 
-        let collection = runningTests.getKnownclientscollectionList();
+    //     let collection = runningTests.getKnownclientscollectionList();
 
-        this.runningTestsItemsCollection.splice(0);
+    //     this.runningTestsItemsCollection.splice(0);
 
-        collection.forEach(element => {
+    //     collection.forEach(element => {
 
-          let newRunTest = new RunningTestItem();
+    //       let newRunTest = new RunningTestItem();
 
-          const testHost = element.getTestshost();
-          newRunTest.ipAddress = testHost.getHostIp();
+    //       const testHost = element.getTestshost();
+    //       newRunTest.ipAddress = testHost.getHostIp();
 
-          const testSpec = element.getRunningtest();
-          newRunTest.testDisplayName = testSpec.getDisplayname();
+    //       const testSpec = element.getRunningtest();
+    //       newRunTest.testDisplayName = testSpec.getDisplayname();
 
-          const testStatus = element.getStatus();
-          switch (testStatus) {
-            case 0:
-              newRunTest.testStatus = "invalid"
-              break;
-            case 1:
-                newRunTest.testStatus = "general error"
-                break;
-            case 2:
-              newRunTest.testStatus = "not running"
-              break;
-            case 3:
-              newRunTest.testStatus = "running"
-              break;
-            case 4:
-              newRunTest.testStatus = "finish with success"
-              break;
-            case 5:
-              newRunTest.testStatus = "finish with errors"
-              break;
-            case 6:
-              newRunTest.testStatus = "waiting for GPos Web Server"
-              break;
-
-
-            default:
-              break;
-          }
+    //       const testStatus = element.getStatus();
+    //       switch (testStatus) {
+    //         case 0:
+    //           newRunTest.testStatus = "invalid"
+    //           break;
+    //         case 1:
+    //             newRunTest.testStatus = "general error"
+    //             break;
+    //         case 2:
+    //           newRunTest.testStatus = "not running"
+    //           break;
+    //         case 3:
+    //           newRunTest.testStatus = "running"
+    //           break;
+    //         case 4:
+    //           newRunTest.testStatus = "finish with success"
+    //           break;
+    //         case 5:
+    //           newRunTest.testStatus = "finish with errors"
+    //           break;
+    //         case 6:
+    //           newRunTest.testStatus = "waiting for GPos Web Server"
+    //           break;
 
 
-          this.runningTestsItemsCollection.push(newRunTest);
-        });
-      },
-      onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+    //         default:
+    //           break;
+    //       }
 
-        if (code == grpc.Code.OK) {
-            // All ok
-            console.log("Done receiving data from server");
-        } else {
 
-            console.error("Error occurred");
-        }
-      }
-  });
+    //       this.runningTestsItemsCollection.push(newRunTest);
+    //     });
+    //   },
+    //   onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+
+    //     if (code == grpc.Code.OK) {
+    //         // All ok
+    //         console.log("Done receiving data from server");
+    //     } else {
+
+    //         console.error("Error occurred");
+    //     }
+    //   }
+    // });
   }
 }
