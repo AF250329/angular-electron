@@ -18,76 +18,59 @@ export class ServerHealthComponent implements OnInit {
 
   @Input()
   set initialAddress(initialAddress:string ){
-    this.targetServerForm.controls['serverAddress'].setValue(initialAddress);
+    this.grpcServerAddress = initialAddress;
   }
 
-  targetServerForm = new FormGroup({
-    serverAddress: new FormControl('')
-  });
-
-  //serverConnectionInProgress: boolean;
   serverConnectionInProgress:Subject<boolean> = new Subject<boolean>();
   connectionErrorOccurred:boolean;
+  connectionErrorMessage: string = '';
   grpcServerAddress: string;
-
   serverHealthStatus:ServerHealthStatus = null;
 
   constructor(private grpcServer: VSTestMainService) {
-    // this.serverConnectionInProgress = false;
     this.serverConnectionInProgress.next(false);
     this.grpcServerAddress = '';
     this.connectionErrorOccurred = false;
-
-    // this.targetServerForm.controls['serverAddress'].valueChanges
-    //   .pipe(
-    //     map(value => this.healthStatusError(''))
-    //   )
-    //   .subscribe();
-      // {
-      // next(x)       { this.healthStatusError('')    },
-      // error(error)  { this.healthStatusError(error) },
-      // complete()    {}
-      // });
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    //this.serverConnectionInProgress = true;
+  tryToConnect() {
+
+    if (this.serverHealthStatus != null) {
+      this.serverHealthStatus = null;
+      return;
+    }
+
+
     this.serverConnectionInProgress.next(true);
 
     var _this = this;
 
-    this.grpcServer.getGRPCServerStatus(this.targetServerForm.controls['serverAddress'].value)
+    this.grpcServer.getGRPCServerStatus(this.grpcServerAddress)
     .subscribe({
       next(serverInformation) {
         _this.serverConnectionInProgress.next(false);
 
-        _this.healthStatusError('');
+        _this.connectionErrorMessage = '';
+        _this.connectionErrorOccurred = false;
 
-        this.serverHealthStatus = serverInformation;
+        _this.serverHealthStatus = serverInformation;
       },
       error(errMessage) {
         _this.serverConnectionInProgress.next(false);
 
-        _this.healthStatusError(errMessage);
+        _this.connectionErrorMessage = errMessage;
+        _this.connectionErrorOccurred = true;
 
-        this.serverHealthStatus = null;
+
+        _this.serverHealthStatus = null;
       },
       complete() {
         _this.serverConnectionInProgress.next(false);
       }
     });
-  }
-
-  healthStatusError(errorMessage: string) {
-
-    if (errorMessage != '') {
-      this.targetServerForm.controls.serverAddress.setErrors({ invalidGrpcServer:true });
-    } else {
-      this.targetServerForm.controls.serverAddress.reset();
-    }
   }
 
   prettySize(bytes:number, separator:string = ' '): string {

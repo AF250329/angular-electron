@@ -5,3 +5,26 @@
 .clr-select-wrapper > select {
   width: 100%;
 }
+
+#grpcServerAddressContainer {
+  flex-flow: row;
+}
+
+#grpcServerAddressContainer > label {
+  display: unset;
+}
+
+#grpcServerAddressContainer .clr-control-container {
+  display: unset;
+  flex-grow: 2;
+}
+
+#grpcServerAddressContainer .clr-control-container .clr-input-wrapper {
+  display: unset;
+  width: 100%;
+}
+
+#grpcServerAddressContainer .clr-control-container .clr-input-wrapper > input {
+  width: 40%;
+  margin-left: 2vw;
+}
