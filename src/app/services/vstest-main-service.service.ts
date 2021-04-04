@@ -109,7 +109,7 @@ export class VSTestMainService {
     collection.forEach(x => this.selectedTestsFiles.push(x));
   }
 
-  scanFile(fileToScan: VisualStorageItem): Observable<any> {
+  scanFile(fileToScan: VisualStorageItem): Observable<TestSpec> {
 
 
     return new Observable((observer) => {

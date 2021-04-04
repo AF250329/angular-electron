@@ -4,7 +4,7 @@ import { AppConfig } from '../../../environments/environment';
 import { grpc } from "@improbable-eng/grpc-web";
 import { VSTestServer } from '../../proto/VTestService_pb_service';
 import { TestSpec } from '../../proto/VTestService_pb';
-import { VisualLabel, VisualTest } from './visual-test';
+// import { VisualLabel, VisualTest } from './visual-test';
 
 import { trigger, transition, useAnimation, state, style } from '@angular/animations';
 import { rubberBand } from 'ng-animate';
@@ -38,7 +38,7 @@ export class TestDiscoveryComponent implements OnInit {
 
   @Input() grpcServerAddress: string;
 
-  testCasesCollection = new Array<VisualTest>();
+  // testCasesCollection = new Array<VisualTest>();
   testCasesCollectionHasItems = false;
   loadingTests:boolean = false;
 
@@ -53,7 +53,7 @@ export class TestDiscoveryComponent implements OnInit {
 
   discoverTest(testPath: string) {
 
-    this.testCasesCollection.splice(0);
+    // this.testCasesCollection.splice(0);
     this.testCasesCollectionHasItems = false;
     this.loadingTests = true;
 
