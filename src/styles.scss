@@ -35,12 +35,14 @@
 
 clr-select-container.clr-form-control {
   flex-direction: unset;
+  flex-grow: 4;
 }
 
 clr-select-container.clr-form-control .clr-control-container {
   flex-grow: 2;
 }
 
-#availableTestsList {
+clr-select-container .clr-control-container {
   margin-left: 2vw;
+  margin-right: 1vw;
 }

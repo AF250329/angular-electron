@@ -8,7 +8,7 @@
           "name": "Angular",
           "type": "chrome",
           "request": "launch",
-          "preLaunchTask": "npm: ng:serve",
+          "preLaunchTask": "npm: start",
           "url": "http://localhost:4200/#",
           "cwd": "${workspaceFolder}",
           "webRoot": "${workspaceFolder}",
