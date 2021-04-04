@@ -1,6 +1,8 @@
 <div class="progress loop" *ngIf=loading>
   <progress></progress>
 </div>
+<span style="margin-left: 20px;" [@tada]="animationState" (@tada.done)="onAnimationDone($event)" >Loaded {{ testsDetailsCollection.length }} test's...</span>
+
 
 <clr-datagrid *ngIf="testsDetailsCollectionHasItems && !loading">
   <clr-dg-column [clrDgField]="'DisplayName'">Display name</clr-dg-column>

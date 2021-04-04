@@ -6,15 +6,31 @@ import { switchMap } from 'rxjs/operators';
 import { VisualStorageItem, VSTestMainService } from '../../../services';
 import { VisualLabel, VisualTest } from '../visual-test';
 
+import { trigger, transition, useAnimation, state, style } from '@angular/animations';
+import { rubberBand } from 'ng-animate';
+
+
 @Component({
   selector: 'app-tests-list-manager',
   templateUrl: './tests-list-manager.component.html',
-  styleUrls: ['./tests-list-manager.component.scss']
+  styleUrls: ['./tests-list-manager.component.scss'],
+  animations: [
+    trigger('tada', [
+      state('inactive', style({ opacity: 1 })),
+      state('active', style({ opacity: 1 })),
+      transition('* => *', useAnimation(rubberBand, {
+      // Set the duration to 180 seconds and delay to 2seconds
+      // params: { timing: 180, delay: 0 }
+    }))])
+  ]
 })
 export class TestsListManagerComponent implements OnInit, OnDestroy  {
 
   testsDetailsCollection:Array<VisualTest> = new Array<VisualTest>();
   testsDetailsCollectionHasItems: boolean = false;
+
+  animationState:string = 'inactive';
+  tada = false;
 
   loading: boolean = false;
 
@@ -44,6 +60,11 @@ export class TestsListManagerComponent implements OnInit, OnDestroy  {
     ).subscribe();
   }
 
+  onAnimationDone($event) {
+    this.animationState =  this.animationState === 'active' ? 'inactive' : 'active';
+  }
+
+
   scanFileForTest(fileToScan: VisualStorageItem) {
 
     this.loading = true;
@@ -69,6 +90,7 @@ export class TestsListManagerComponent implements OnInit, OnDestroy  {
                                     },
                                     () => {
                                       this.loading = false;
+                                      this['tada'] = false;
                                     });
   }
 
