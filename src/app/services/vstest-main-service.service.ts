@@ -5,7 +5,7 @@ import { AppConfig } from '../../environments/environment';
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { VSTestServer, StorageBrowser } from '../proto/VTestService_pb_service';
-import { ServerHealthStatus, StorageItemCollection, StoragePath, ItemType } from '../proto/VTestService_pb';
+import { ServerHealthStatus, StorageItemCollection, StoragePath, ItemType, TestSpec, StorageItem } from '../proto/VTestService_pb';
 import { VisualStorageItem } from './storage-item';
 
 
@@ -29,6 +29,9 @@ export class VSTestMainService {
         host: serverAddress,
         request: new Empty(),
         onMessage: (serverHealthStatus: ServerHealthStatus) => {
+
+          this.grpcServerAddress = serverAddress;
+
           observer.next(serverHealthStatus);
         },
         onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
@@ -104,6 +107,33 @@ export class VSTestMainService {
   setTestsFiles(collection:Array<VisualStorageItem>) {
     this.selectedTestsFiles.splice(0);
     collection.forEach(x => this.selectedTestsFiles.push(x));
+  }
 
+  scanFile(fileToScan: VisualStorageItem): Observable<any> {
+
+
+    return new Observable((observer) => {
+
+      const storageItem = new StorageItem();
+      storageItem.setLink(fileToScan.link);
+      storageItem.setName(fileToScan.name);
+
+      grpc.invoke(VSTestServer.ScanFile, {
+          host: this.grpcServerAddress,
+          request: storageItem,
+          onMessage: (test: TestSpec) => {
+            observer.next(test);
+          },
+          onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+            if (code == grpc.Code.OK) {
+              // All ok
+              observer.complete();
+            } else {
+              // Error occurred
+              observer.error(msg);
+            }
+          }
+      });
+    });
   }
 }

@@ -3,7 +3,7 @@ import { AppConfig } from '../../../environments/environment';
 
 import { grpc } from "@improbable-eng/grpc-web";
 import { VSTestServer } from '../../proto/VTestService_pb_service';
-import { Sources, TestSpec } from '../../proto/VTestService_pb';
+import { TestSpec } from '../../proto/VTestService_pb';
 import { VisualLabel, VisualTest } from './visual-test';
 
 import { trigger, transition, useAnimation, state, style } from '@angular/animations';
@@ -59,8 +59,8 @@ export class TestDiscoveryComponent implements OnInit {
 
     this['tada'] = false;
 
-    const sources = new Sources();
-    sources.setPath(testPath);
+    // const sources = new Sources();
+    // sources.setPath(testPath);
 
     // grpc.invoke(VSTestServer.GetAllTest, {
     //   request: sources,

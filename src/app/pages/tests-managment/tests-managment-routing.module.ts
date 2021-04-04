@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TestsManagmentComponent } from './tests-managment.component';
 import { TestsListManagerComponent } from './tests-list-manager/tests-list-manager.component';
+import { TestsListWelcomeComponent } from './tests-list-welcome/tests-list-welcome.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TestsListManagerComponent
+        component: TestsListWelcomeComponent
       },
       {
         path: ':id',

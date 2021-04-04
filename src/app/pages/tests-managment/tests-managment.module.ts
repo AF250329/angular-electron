@@ -9,10 +9,11 @@ import { CdsModule } from '@cds/angular';
 import { TestsManagmentRoutingModule } from './tests-managment-routing.module';
 import { TestsManagmentComponent } from './tests-managment.component';
 import { TestsListManagerComponent } from './tests-list-manager/tests-list-manager.component';
+import { TestsListWelcomeComponent } from './tests-list-welcome/tests-list-welcome.component';
 
 
 @NgModule({
-  declarations: [TestsManagmentComponent, TestsListManagerComponent],
+  declarations: [TestsManagmentComponent, TestsListManagerComponent, TestsListWelcomeComponent],
   imports: [
     CommonModule,
     FormsModule,

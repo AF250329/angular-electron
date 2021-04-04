@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VisualStorageItem } from '../../services';
+import { Router } from '@angular/router';
+import { VisualStorageItem, VSTestMainService } from '../../services';
 
 @Component({
   selector: 'app-tests-managment',
@@ -8,13 +9,20 @@ import { VisualStorageItem } from '../../services';
 })
 export class TestsManagmentComponent implements OnInit {
 
-  selectedTest:any;
+  selectedTestName:string;
 
   availableTests:Array<VisualStorageItem> = new Array<VisualStorageItem>();
 
-  constructor() { }
+  constructor(private grpcServer: VSTestMainService, private route: Router) { }
 
   ngOnInit(): void {
+    this.grpcServer.selectedTestsFiles.forEach(x => {this.availableTests.push(x)});
   }
 
+  reloadTests() {
+
+    const test = this.availableTests.filter(x => x.name == this.selectedTestName).pop();
+
+    this.route.navigate(['/tests', test.name ]);
+  }
 }

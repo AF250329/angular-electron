@@ -21,6 +21,7 @@ export class StorageBrowserComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingFiles = true;
+    this.refresh();
   }
 
   addNewFile() {

@@ -4,7 +4,7 @@ import { AppConfig } from '../../../environments/environment';
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { VSTestServer } from '../../proto/VTestService_pb_service';
-import { RunningTests } from '../../proto/VTestService_pb';
+// import { RunningTests } from '../../proto/VTestService_pb';
 import  { RunningTestItem } from './running-tests-source';
 
 

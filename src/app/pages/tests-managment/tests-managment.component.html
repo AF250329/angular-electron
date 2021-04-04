@@ -1,8 +1,11 @@
-<clr-select-container>
-  <label>Available tests:</label>
-  <select clrSelect id="availableTestsList" name="options" [(ngModel)]="selectedTest">
-    <option *ngFor="let singleTest of availableTests; let i = index" [value]="singleTest.name">{{ singleTest.name }}</option>
-  </select>
-</clr-select-container>
+<div style="display:flex;align-items:baseline;">
+  <clr-select-container>
+    <label>Available tests:</label>
+    <select clrSelect id="availableTestsList" name="options" [(ngModel)]="selectedTestName">
+      <option *ngFor="let singleTest of availableTests; let i = index" [value]="singleTest.name">{{ singleTest.name }}</option>
+    </select>
+  </clr-select-container>
+  <button class="btn btn-primary" (click)="reloadTests()" [disabled]="!selectedTestName">Reload</button>
+</div>
 
 <router-outlet></router-outlet>
