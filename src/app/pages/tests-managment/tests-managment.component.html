@@ -6,6 +6,10 @@
     </select>
   </clr-select-container>
   <button class="btn btn-primary" (click)="reloadTests()" [disabled]="!selectedTestName">Reload</button>
+  <button class="btn btn-success" (click)="saveTests()" [disabled]="!couldSaveTest()">
+    <clr-icon shape="check"></clr-icon>
+    Save
+  </button>
 </div>
 
 <router-outlet></router-outlet>

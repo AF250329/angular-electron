@@ -16,9 +16,6 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-      "@vstest-manager/*": ["./src/*"]
-    }
   },
   "files": [
     "src/main.ts",

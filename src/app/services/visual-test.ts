@@ -11,5 +11,6 @@ export class VisualTest {
   VisualSourceText: string;
   CodeFilePath: string;
   LineNumber: number;
+  Selected:boolean;
   Labels: Array<VisualLabel>;
 }

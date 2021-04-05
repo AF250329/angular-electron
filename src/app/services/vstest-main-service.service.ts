@@ -5,8 +5,9 @@ import { AppConfig } from '../../environments/environment';
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { VSTestServer, StorageBrowser } from '../proto/VTestService_pb_service';
-import { ServerHealthStatus, StorageItemCollection, StoragePath, ItemType, TestSpec, StorageItem } from '../proto/VTestService_pb';
+import { ServerHealthStatus, StorageItemCollection, StoragePath, ItemType, TestSpec, StorageItem, TestSpecCollection, LoadedTestsCollection, LoadedTestItem } from '../proto/VTestService_pb';
 import { VisualStorageItem } from './storage-item';
+import { VisualLoadedTest } from './visual-loaded-test';
 
 
 @Injectable({
@@ -111,7 +112,6 @@ export class VSTestMainService {
 
   scanFile(fileToScan: VisualStorageItem): Observable<TestSpec> {
 
-
     return new Observable((observer) => {
 
       const storageItem = new StorageItem();
@@ -135,5 +135,60 @@ export class VSTestMainService {
           }
       });
     });
+  }
+
+  runTests(sourceFile: StorageItem, testsCollection: Array<TestSpec>) : Observable<string> {
+
+    const testSpecCollection = new TestSpecCollection();
+    testSpecCollection.setStorageitem(sourceFile);
+    testSpecCollection.setCollectionList(testsCollection);
+
+      return new Observable( (observer) => {
+
+        grpc.invoke(VSTestServer.RunTests, {
+            host: this.grpcServerAddress,
+            request: testSpecCollection,
+            onMessage: (object) =>{
+              observer.next('');
+            },
+            onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+              if (code == grpc.Code.OK) {
+                // All ok
+                observer.complete();
+              } else {
+                // Error occurred
+                observer.error(msg);
+              }
+            }
+        })
+      });
+  }
+
+  getLoadedTest() : Observable<VisualLoadedTest> {
+    return new Observable( (observer) => {
+      grpc.invoke(VSTestServer.GetAvailableTests, {
+        host: this.grpcServerAddress,
+        request: new Empty(),
+        onMessage: (loadedTestsCollection: LoadedTestsCollection) => {
+          loadedTestsCollection.getItemsList().forEach(element => {
+
+            const item = new VisualLoadedTest();
+            item.fileName = element.getSource().getName();
+            item.testsCount = element.getTestscount();
+
+            observer.next(item);
+          });
+        },
+        onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+          if (code == grpc.Code.OK) {
+            // All ok
+            observer.complete();
+          } else {
+            // Error occurred
+            observer.error(msg);
+          }
+        }
+      });
+    })
   }
 }

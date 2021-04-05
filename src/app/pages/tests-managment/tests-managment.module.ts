@@ -10,10 +10,16 @@ import { TestsManagmentRoutingModule } from './tests-managment-routing.module';
 import { TestsManagmentComponent } from './tests-managment.component';
 import { TestsListManagerComponent } from './tests-list-manager/tests-list-manager.component';
 import { TestsListWelcomeComponent } from './tests-list-welcome/tests-list-welcome.component';
+import { MaximumLengthPipe } from './maximum-length.pipe';
 
 
 @NgModule({
-  declarations: [TestsManagmentComponent, TestsListManagerComponent, TestsListWelcomeComponent],
+  declarations: [
+      TestsManagmentComponent,
+      TestsListManagerComponent,
+      TestsListWelcomeComponent,
+      MaximumLengthPipe
+  ],
   imports: [
     CommonModule,
     FormsModule,

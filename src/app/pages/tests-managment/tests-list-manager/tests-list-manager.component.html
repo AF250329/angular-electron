@@ -11,8 +11,8 @@
 
   <!-- <clr-dg-row *ngFor="let visualTest of (testCasesCollection | async)"></clr-dg-row>   -->
   <clr-dg-row *clrDgItems="let visualTest of testsDetailsCollection">
-    <clr-dg-cell>{{visualTest.DisplayName}}</clr-dg-cell>
-    <clr-dg-cell>{{visualTest.VisualSourceText}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.DisplayName | maximumLength:40}}</clr-dg-cell>
+    <clr-dg-cell>{{visualTest.VisualSourceText | maximumLength:60}}</clr-dg-cell>
     <clr-dg-cell>
       <ng-container *ngFor="let singleLabel of visualTest.Labels">
         <span class="label label-info">{{ singleLabel.key }}:{{ singleLabel.value }}</span>
