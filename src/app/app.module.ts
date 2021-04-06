@@ -12,7 +12,7 @@ import { PagesModule } from './pages/pages.module';
 import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { VSTestMainService, ScannedTestsService } from './services';
+import { VSTestMainService, ScannedTestsService, TestsStatusService } from './services';
 
 
 // NG Translate
@@ -71,7 +71,8 @@ import '@cds/core/alert/register.js';
   providers: [
       ElectronService,
       VSTestMainService,
-      ScannedTestsService
+      ScannedTestsService,
+      TestsStatusService
   ],
   bootstrap: [AppComponent]
 })

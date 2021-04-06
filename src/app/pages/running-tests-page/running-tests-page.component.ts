@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AppConfig } from '../../../environments/environment';
 
-import { grpc } from "@improbable-eng/grpc-web";
-import { Empty } from "google-protobuf/google/protobuf/empty_pb";
-import { VSTestServer } from '../../proto/VTestService_pb_service';
-// import { RunningTests } from '../../proto/VTestService_pb';
-import  { RunningTestItem } from './running-tests-source';
+import { TestsStatusService, VSTestMainService } from '../../services';
 
 
 @Component({
@@ -13,92 +10,48 @@ import  { RunningTestItem } from './running-tests-source';
   templateUrl: './running-tests-page.component.html',
   styleUrls: ['./running-tests-page.component.scss']
 })
-export class RunningTestsPageComponent implements OnInit {
+export class RunningTestsPageComponent implements OnInit, OnDestroy {
 
-  grpcServerAddress:string ='';
-  testsLeftToRun:number = 0;
-  testFinishedAll:number = 0;
-  testFinishedError:number = 0;
-  testFinishedSuccess:number = 0;
-  testProcessRuntime:string = '';
-  runningTestsItemsCollection:Array<RunningTestItem> = [];
+  private grpcServerAddress: string = '';
 
-  constructor() { }
+  private subscription1:Subscription;
+  private subscription2: Subscription;
+
+  constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService) {
+
+  }
+  ngOnDestroy(): void {
+    if (this.subscription1) {
+      this.subscription1.unsubscribe();
+    }
+    if (this.subscription2) {
+      this.subscription1.unsubscribe();
+    }
+  }
 
   ngOnInit(): void {
+    this.grpcServerAddress = this.grpcServer.grpcServerAddress;
   }
 
   refreshData() {
-    this.grpcServerAddress = AppConfig.GRPCWebServerAddress;
 
-    // grpc.invoke(VSTestServer.GetRunningTest, {
-    //   host: AppConfig.GRPCWebServerAddress,
-    //   request: new Empty(),
-    //   onMessage: (runningTests: RunningTests) => {
+    if (this.subscription1) {
+      this.subscription1.unsubscribe();
+    }
+    if (this.subscription2) {
+      this.subscription1.unsubscribe();
+    }
 
-    //     this.testsLeftToRun = runningTests.getLefttorun();
-    //     this.testFinishedAll = runningTests.getTestsallfinished();
-    //     this.testFinishedError = runningTests.getTestfinishederror();
-    //     this.testFinishedSuccess = runningTests.getTestfinishedsucess();
-    //     this.testProcessRuntime = runningTests.getRunningtime();
+    this.subscription1 = this.testStatusService.getGlobalStatus(this.grpcServerAddress).subscribe(
+      (element) => {},
+      (error) => {},
+      () => {}
+    );
 
-    //     let collection = runningTests.getKnownclientscollectionList();
-
-    //     this.runningTestsItemsCollection.splice(0);
-
-    //     collection.forEach(element => {
-
-    //       let newRunTest = new RunningTestItem();
-
-    //       const testHost = element.getTestshost();
-    //       newRunTest.ipAddress = testHost.getHostIp();
-
-    //       const testSpec = element.getRunningtest();
-    //       newRunTest.testDisplayName = testSpec.getDisplayname();
-
-    //       const testStatus = element.getStatus();
-    //       switch (testStatus) {
-    //         case 0:
-    //           newRunTest.testStatus = "invalid"
-    //           break;
-    //         case 1:
-    //             newRunTest.testStatus = "general error"
-    //             break;
-    //         case 2:
-    //           newRunTest.testStatus = "not running"
-    //           break;
-    //         case 3:
-    //           newRunTest.testStatus = "running"
-    //           break;
-    //         case 4:
-    //           newRunTest.testStatus = "finish with success"
-    //           break;
-    //         case 5:
-    //           newRunTest.testStatus = "finish with errors"
-    //           break;
-    //         case 6:
-    //           newRunTest.testStatus = "waiting for GPos Web Server"
-    //           break;
-
-
-    //         default:
-    //           break;
-    //       }
-
-
-    //       this.runningTestsItemsCollection.push(newRunTest);
-    //     });
-    //   },
-    //   onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
-
-    //     if (code == grpc.Code.OK) {
-    //         // All ok
-    //         console.log("Done receiving data from server");
-    //     } else {
-
-    //         console.error("Error occurred");
-    //     }
-    //   }
-    // });
+    this.subscription2 = this.testStatusService.getWorkersStatus(this.grpcServerAddress).subscribe(
+      (element) => {},
+      (error) => {},
+      () => {}
+    );
   }
 }

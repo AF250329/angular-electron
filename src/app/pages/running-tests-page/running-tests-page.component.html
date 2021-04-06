@@ -1,30 +1,60 @@
 <div class="clr-row">
-  <div class="clr-col-3">
-    <label>Tests server address: {{ grpcServerAddress }} </label>
-  </div>
-  <div class="clr-col-8">
-    <span>&nbsp;</span>
-  </div>
   <div class="clr-col-1">
     <button class="btn btn-primary" (click)="refreshData()" >Refresh</button>
   </div>
 </div>
 <div class="clr-row">
   <div class="clr-col-2">
-    <label>Tests left to run: {{testsLeftToRun}}</label>
+    <label>Number workers:</label>
+    <label style="float: right">127</label>
+  </div>
+</div>
+<div class="clr-row" style="align-items: center;">
+  <div class="clr-col-2">
+    <label>Running tests:</label>
+    <label style="float: right">3482</label>
+  </div>
+  <div class="clr-col-9" style="padding: 0px;">
+    <div class="progress">
+      <progress id="overallProgressBar" value="3482" max="5479"></progress>
+    </div>
+  </div>
+  <div class="clr-col-1">
+    <label style="float: left">5479</label>
+  </div>
+</div>
+<div class="clr-row">
+  <div class="clr-col-2">
+    <label>Succeeded tests:</label>
+    <label style="float: right; color:#68C71A">848</label>
   </div>
   <div class="clr-col-2">
-    <label>Finished: {{testFinishedAll}}</label>
+    <label>Failed tests:</label>
+    <label style="float: right; color:#9E57BC">18</label>
+  </div>
+</div>
+<div class="clr-row">
+  <div class="clr-col-2">
+    <label>Min execution time:</label>
+    <label style="float: right;">17s</label>
   </div>
   <div class="clr-col-2">
-    <label>Finished with errors: {{testFinishedError}}</label>
+    <label>Max execution time:</label>
+    <label style="float: right;">80s</label>
   </div>
   <div class="clr-col-2">
-    <label>Finished success: {{testFinishedSuccess}}</label>
+    <label>Average execution time:</label>
+    <label style="float: right;">22s</label>
   </div>
   <div class="clr-col-2">
-    <label>Running for: {{testProcessRuntime}}</label>
+    <label>Total running time:</label>
+    <label style="float: right;">00:17:53</label>
   </div>
+  <div class="clr-col-3">
+    <label>Estimated time of arrival:</label>
+    <label style="float: right;">01:12:12</label>
+  </div>
+
 </div>
 <div class="clr-row">
   <table class="table">
