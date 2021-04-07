@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppConfig } from '../../../environments/environment';
 
-import { TestsStatusService, VSTestMainService } from '../../services';
+import { TestsStatusService, VisualLiveStatusData, VSTestMainService } from '../../services';
 
 
 @Component({
@@ -17,8 +17,10 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
   private subscription1:Subscription;
   private subscription2: Subscription;
 
-  constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService) {
+  visualLiveStatusData:VisualLiveStatusData;
 
+  constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService) {
+    this.visualLiveStatusData = new VisualLiveStatusData();
   }
   ngOnDestroy(): void {
     if (this.subscription1) {
@@ -43,7 +45,9 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
     }
 
     this.subscription1 = this.testStatusService.getGlobalStatus(this.grpcServerAddress).subscribe(
-      (element) => {},
+      (element) => {
+        this.visualLiveStatusData = element;
+      },
       (error) => {},
       () => {}
     );

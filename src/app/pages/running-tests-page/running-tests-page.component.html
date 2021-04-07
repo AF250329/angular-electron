@@ -6,53 +6,53 @@
 <div class="clr-row">
   <div class="clr-col-2">
     <label>Number workers:</label>
-    <label style="float: right">127</label>
+    <label style="float: right">{{ visualLiveStatusData.numberOfWorkers }}</label>
   </div>
 </div>
 <div class="clr-row" style="align-items: center;">
   <div class="clr-col-2">
     <label>Running tests:</label>
-    <label style="float: right">3482</label>
+    <label style="float: right">{{ visualLiveStatusData.runningTestIndex }}</label>
   </div>
   <div class="clr-col-9" style="padding: 0px;">
     <div class="progress">
-      <progress id="overallProgressBar" value="3482" max="5479"></progress>
+      <progress id="overallProgressBar" value="visualLiveStatusData.runningTestIndex" max="visualLiveStatusData.runningTestTotal"></progress>
     </div>
   </div>
   <div class="clr-col-1">
-    <label style="float: left">5479</label>
+    <label style="float: left">{{ visualLiveStatusData.runningTestTotal }}</label>
   </div>
 </div>
 <div class="clr-row">
   <div class="clr-col-2">
     <label>Succeeded tests:</label>
-    <label style="float: right; color:#68C71A">848</label>
+    <label style="float: right; color:#68C71A">{{ visualLiveStatusData.numberOfSucceededTests }}</label>
   </div>
   <div class="clr-col-2">
     <label>Failed tests:</label>
-    <label style="float: right; color:#9E57BC">18</label>
+    <label style="float: right; color:#9E57BC">{{ visualLiveStatusData.numberOfFailedTests }}</label>
   </div>
 </div>
 <div class="clr-row">
   <div class="clr-col-2">
     <label>Min execution time:</label>
-    <label style="float: right;">17s</label>
+    <label style="float: right;">{{ visualLiveStatusData.minExecutionTime }}</label>
   </div>
   <div class="clr-col-2">
     <label>Max execution time:</label>
-    <label style="float: right;">80s</label>
+    <label style="float: right;">{{ visualLiveStatusData.maxExecutionTime }}</label>
   </div>
   <div class="clr-col-2">
     <label>Average execution time:</label>
-    <label style="float: right;">22s</label>
+    <label style="float: right;">{{ visualLiveStatusData.avgExecutionTime }}</label>
   </div>
-  <div class="clr-col-2">
+  <div class="clr-col-2" style="padding: 0;">
     <label>Total running time:</label>
-    <label style="float: right;">00:17:53</label>
+    <label style="float: right;">{{ visualLiveStatusData.totalRunningTime }}</label>
   </div>
-  <div class="clr-col-3">
+  <div class="clr-col-2" style="padding: 0;margin-left: 1.5rem;">
     <label>Estimated time of arrival:</label>
-    <label style="float: right;">01:12:12</label>
+    <label style="float: right;">{{ visualLiveStatusData.etaTime }}</label>
   </div>
 
 </div>
