@@ -67,7 +67,7 @@
           Worker IP
         </th>
         <th>
-          Test name
+          Log
         </th>
         <th>
           Status
@@ -75,15 +75,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of runningTestsItemsCollection; let i = index">
+      <tr *ngFor="let row of workersCollection; let i = index">
           <td>
             {{ i + 1 }}
           </td>
           <td>
-            {{ row.ipAddress }}
+            <a [routerLink]="['/report', row.ipAddress]">{{ row.ipAddress }}</a>
           </td>
           <td>
-            {{ row.testDisplayName }}
+            <div style="overflow: auto; height:20vh">
+              <table class="table table-noborder">
+                <tr *ngFor="let logRecord of row.logs">
+                  <td>
+                    {{ logRecord }}
+                  </td>
+                </tr>
+              </table>
+            </div>
           </td>
           <td>
             {{ row.testStatus }}

@@ -6,19 +6,14 @@ import {
         WelcomePageComponent,
         GlobalSettingsPageComponent,
         RunningTestsPageComponent,
-        ReportsPageComponent
+        ReportsPageComponent,
+        WorkerStatusComponent
       } from './pages';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: WelcomePageComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'settings',
-    component: GlobalSettingsPageComponent
-  },
+  { path: '',         component: WelcomePageComponent, pathMatch: 'full'  },
+  { path: 'settings', component: GlobalSettingsPageComponent              },
+  { path: 'status',   component: RunningTestsPageComponent                },
   {
     path: 'tests',
     loadChildren: () => import('./pages/tests-managment/tests-managment.module').then(m =>
@@ -26,17 +21,18 @@ const routes: Routes = [
       data: { preload: true}
   },
   {
-    path: 'status',
-    component: RunningTestsPageComponent
-  },
-  {
     path: 'report',
-    component: ReportsPageComponent
+    children: [
+      { path: '', component: ReportsPageComponent   },
+      { path: ':ipaddress', component: WorkerStatusComponent }
+    ]
   },
-  {
-    path: '**',
-    component: PageNotFoundComponent
-  }
+
+  // {
+  //   path: 'report',
+  //   component: ReportsPageComponent
+  // },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

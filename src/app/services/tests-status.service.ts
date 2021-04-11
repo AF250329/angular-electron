@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { Observable } from 'rxjs';
-import { LiveStatusData } from '../proto/VTestService_pb';
+import { LiveStatusData, WorkerCollection } from '../proto/VTestService_pb';
 import { WorkersSchedulerService } from '../proto/VTestService_pb_service';
 import { VisualLiveStatusData } from './visual-live-status-data';
+import { VisualWorker } from './visual-worker';
 
 @Injectable({
   providedIn: 'root'
@@ -61,9 +62,38 @@ export class TestsStatusService {
     });
   }
 
-  getWorkersStatus(grpcServerAddress: string): Observable<any> {
-    return new Observable( (observer) => {
+  getWorkersStatus(grpcServerAddress: string): Observable<Array<VisualWorker>> {
+    const emptyRequst = new Empty();
 
+    return new Observable( (observer) => {
+      grpc.invoke(WorkersSchedulerService.GetLiveWorkersStream, {
+        host: grpcServerAddress,
+        request:emptyRequst,
+        onMessage: (workersCollection: WorkerCollection) => {
+            var collection = new Array<VisualWorker>();
+
+            workersCollection.getItemsList()
+                             .forEach(element => {
+
+              let item = new VisualWorker();
+              item.ipAddress = element.getSource().getHostip();
+              item.lastSeen = new Date(element.getLastseentime().getSeconds() * 1000);  //.toISOString().substr(11, 8);
+
+              collection.push(item);
+            });
+
+            observer.next(collection);
+        },
+        onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+          if (code == grpc.Code.OK) {
+            // All ok
+            observer.complete();
+          } else {
+            observer.error(msg);
+          // this.healthStatusError(code, msg, trailers);
+          }
+        }
+      });
     });
   }
 }

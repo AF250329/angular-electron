@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { AppConfig } from '../../../environments/environment';
 
-import { TestsStatusService, VisualLiveStatusData, VSTestMainService } from '../../services';
+import { TestsStatusService, VisualLiveStatusData, VisualWorker, VSTestMainService } from '../../services';
 
 
 @Component({
@@ -19,7 +20,9 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
 
   visualLiveStatusData:VisualLiveStatusData;
 
-  constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService) {
+  workersCollection:Array<VisualWorker> = new Array<VisualWorker>();
+
+  constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService, private router: Router) {
     this.visualLiveStatusData = new VisualLiveStatusData();
   }
   ngOnDestroy(): void {
@@ -53,7 +56,13 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
     );
 
     this.subscription2 = this.testStatusService.getWorkersStatus(this.grpcServerAddress).subscribe(
-      (element) => {},
+      (element) => {
+        this.workersCollection.splice(0);
+
+        element.forEach(item => {
+          this.workersCollection.push(item);
+        })
+      },
       (error) => {},
       () => {}
     );

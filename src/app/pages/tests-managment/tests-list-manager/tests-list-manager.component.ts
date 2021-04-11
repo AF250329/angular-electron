@@ -43,23 +43,24 @@ export class TestsListManagerComponent implements OnInit, OnDestroy  {
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.paramMap
-    .pipe(
-      switchMap((params: ParamMap) => {
-        this.testName = params.get('id');
+                                  .pipe(
+                                    switchMap((params: ParamMap) => {
+                                      this.testName = params.get('id');
 
-        this.scannedTestsService.clear();
+                                      this.scannedTestsService.clear();
 
-        const fileToScan = this.grpcServer.selectedTestsFiles.filter(x => x.name == this.testName).pop();
+                                      const fileToScan = this.grpcServer.selectedTestsFiles.filter(x => x.name == this.testName).pop();
 
-        if (fileToScan) {
-          this.scanFileForTest(fileToScan);
-        } else {
-          // What is this that we received ?
-        }
+                                      if (fileToScan) {
+                                        this.scanFileForTest(fileToScan);
+                                      } else {
+                                        // What is this that we received ?
+                                      }
 
-        return of(null);
-      })
-    ).subscribe();
+                                      return of(null);
+                                    })
+                                  )
+                                  .subscribe();
   }
 
   onAnimationDone($event) {
