@@ -7,14 +7,37 @@
   </div>
 </div>
 
-<table class="table table-noborder table-vertical">
-  <tr>
-    <td class="left">
-      Worker ID
-    </td>
-    <td class="left">
-      {{ workerIpAddress }}
-    </td>
-  </tr>
-</table>
+<div class="clr-row">
+  <div class="clr-col-2" style="padding: unset;">
+    <span style="margin-top: unset;">Registered at</span>
+  </div>
+  <div class="clr-col-10">
+    {{ registrationTime | date:'HH:mm:ss'}}
+  </div>
+</div>
 
+<div class="clr-row">
+  <div class="clr-col-2" style="padding: unset;">
+    <span style="margin-top: unset;">Last seen at</span>
+  </div>
+  <div class="clr-col-10">
+    {{ lastSeenTime | date:'HH:mm:ss'}}
+  </div>
+</div>
+
+<div class="clr-row">
+  <div class="clr-col-2" style="padding: unset;">
+    <span>Logs</span>
+  </div>
+  <div class="clr-col-10">
+    <div style="height: 400px; overflow-y: scroll">
+      <table class="table table-noborder table-compact">
+        <tr *ngFor="let logRecord of workerLogs; let i = index;" >
+          <td class="left">
+            {{ logRecord }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

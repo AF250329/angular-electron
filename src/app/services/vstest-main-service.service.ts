@@ -24,6 +24,8 @@ export class VSTestMainService {
 
   getGRPCServerStatus(serverAddress:string) : Observable<ServerHealthStatus> {
 
+    console.log("[VSTestMainService::getGRPCServerStatus] Going to request server 'health' status");
+
     return new Observable<ServerHealthStatus>((observer) => {
 
       grpc.invoke(VSTestServer.HealthStatus, {
@@ -34,15 +36,20 @@ export class VSTestMainService {
           this.grpcServerAddress = serverAddress;
 
           observer.next(serverHealthStatus);
+
+          console.log(`[VSTestMainService::getGRPCServerStatus] Server 'health' status received and pushed to observable`);
         },
         onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
 
           if (code == grpc.Code.OK) {
               // All ok
               observer.complete();
+              console.log(`[VSTestMainService::getGRPCServerStatus] Observable complete`);
           } else {
             observer.error(msg);
 //              this.healthStatusError(code, msg, trailers);
+
+            console.error(`[VSTestMainService::getGRPCServerStatus] Error occurred while trying to receive 'health' data from server. Error is: ${msg}`);
           }
         }
       });
