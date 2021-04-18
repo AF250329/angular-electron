@@ -3,7 +3,8 @@ import { Subscription } from 'rxjs';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { AppConfig } from '../../../environments/environment';
 
-import { TestsStatusService, VisualLiveStatusData, VisualWorker, VSTestMainService } from '../../services';
+import { TestsStatusService, VisualLiveStatusData, VisualWorkerStatusRecord, VSTestMainService } from '../../services';
+import { WorkerRunningStatus } from '../../proto/VTestService_pb';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
 
   visualLiveStatusData:VisualLiveStatusData;
 
-  workersCollection:Array<VisualWorker> = new Array<VisualWorker>();
+  workersCollection:Array<VisualWorkerStatusRecord> = new Array<VisualWorkerStatusRecord>();
 
   constructor(private grpcServer:VSTestMainService, private testStatusService:TestsStatusService, private router: Router) {
     this.visualLiveStatusData = new VisualLiveStatusData();
@@ -77,6 +78,34 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
         this.workersCollection.splice(0);
 
         element.forEach(item => {
+
+          // icons from https://fonts.google.com/icons
+          switch(item.runningStatus) {
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INVALID:
+              item.runningStatus = "report_gmailerrorred";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INTERNAL_ERROR:
+                item.runningStatus = "error";
+                break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_RUNNING_TEST:
+              item.runningStatus = "directions_run";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING:
+              item.runningStatus = "hourglass_empty";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_ERROR:
+              item.runningStatus = "running_with_errors";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_OK:
+              item.runningStatus = "check_circle_outline";
+              break;
+          }
+
           this.workersCollection.push(item);
         })
 

@@ -60,41 +60,33 @@
   <table class="table">
     <thead>
       <tr>
-        <th>
+        <th class="left" style="width: 1vw;">
           Index
         </th>
-        <th>
+        <th class="left">
           Worker IP
         </th>
-        <th>
+        <th class="left">
           Log
         </th>
-        <th>
+        <th class="left">
           Status
         </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of workersCollection; let i = index">
-          <td>
+          <td class="left">
             {{ i + 1 }}
           </td>
-          <td>
+          <td class="left">
             <a [routerLink]="['/report', row.ipAddress]">{{ row.ipAddress }}</a>
           </td>
-          <td>
-            <div style="overflow: auto; height:20vh">
-              <table class="table table-noborder">
-                <tr *ngFor="let logRecord of row.logs">
-                  <td>
-                    {{ logRecord }}
-                  </td>
-                </tr>
-              </table>
-            </div>
+          <td class="left">
+            {{ row.lastLogRecord }}
           </td>
-          <td>
-            {{ row.testStatus }}
+          <td class="left">
+            <span class="material-icons md-24">{{ row.runningStatus }}</span>
           </td>
       </tr>
     </tbody>

@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { Observable } from 'rxjs';
-import { LiveStatusData, TestsHost, WorkerCollection, WorkerStatus } from '../proto/VTestService_pb';
+import { LiveStatusData, TestsHost, WorkersStatusCollection, WorkerReport } from '../proto/VTestService_pb';
 import { WorkersSchedulerService } from '../proto/VTestService_pb_service';
 import { VisualLiveStatusData } from './visual-live-status-data';
-import { VisualWorker } from './visual-worker';
+import { VisualWorkerReport } from './visual-worker-report';
+import { VisualWorkerStatusRecord } from './visual-worker-status-record';
 
 @Injectable({
   providedIn: 'root'
@@ -69,24 +70,28 @@ export class TestsStatusService {
     });
   }
 
-  getWorkersStatusStream(grpcServerAddress: string): Observable<Array<VisualWorker>> {
+  getWorkersStatusStream(grpcServerAddress: string): Observable<Array<VisualWorkerStatusRecord>> {
     const emptyRequst = new Empty();
 
     return new Observable( (observer) => {
       grpc.invoke(WorkersSchedulerService.GetLiveWorkersStream, {
         host: grpcServerAddress,
         request:emptyRequst,
-        onMessage: (workersCollection: WorkerCollection) => {
-            var collection = new Array<VisualWorker>();
+        onMessage: (workersCollection: WorkersStatusCollection) => {
+            var collection = new Array<VisualWorkerStatusRecord>();
 
             workersCollection.getItemsList()
                              .forEach(element => {
 
-              let item = new VisualWorker();
+              let item = new VisualWorkerStatusRecord();
 
               item.ipAddress = element.getSource().getHostip();
 
               item.lastSeen = new Date(element.getLastseentime().getSeconds() * 1000);  //.toISOString().substr(11, 8);
+
+              item.lastLogRecord = element.getLastlogrecord();
+
+              item.runningStatus = element.getRunningstatus();
 
               collection.push(item);
             });
@@ -113,7 +118,7 @@ export class TestsStatusService {
     });
   }
 
-  getSpecificWorkerStatus(grpcServerAddress: string, workerHostIpAddress: string): Observable<VisualWorker> {
+  getSpecificWorkerStatus(grpcServerAddress: string, workerHostIpAddress: string): Observable<VisualWorkerReport> {
 
     return new Observable( (observer) => {
 
@@ -123,8 +128,8 @@ export class TestsStatusService {
       grpc.invoke(WorkersSchedulerService.GetWorkerData, {
         host: grpcServerAddress,
         request: sourceHost,
-        onMessage: (element: WorkerStatus) => {
-          let item = new VisualWorker();
+        onMessage: (element: WorkerReport) => {
+          let item = new VisualWorkerReport();
 
           item.ipAddress = element.getSource().getHostip(),
 
@@ -133,6 +138,8 @@ export class TestsStatusService {
           item.registeredAt = new Date(element.getRegistrationtime().getSeconds() * 1000);
 
           item.logs = new Array<string>();
+
+          item.status = element.getRunnningstatus();
 
           element.getLogList().forEach(x => {
             item.logs.push(x);

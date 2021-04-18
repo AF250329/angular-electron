@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { WorkerRunningStatus } from '../../proto/VTestService_pb';
 import { TestsStatusService, VSTestMainService } from '../../services';
 
 @Component({
@@ -16,6 +17,7 @@ export class WorkerStatusComponent implements OnInit {
   registrationTime: Date;
   lastSeenTime: Date;
   workerLogs:Array<string> = new Array<string>();
+  runningStatus: string;
 
 
   constructor(private activatedRoute: ActivatedRoute, private testsStatusService:TestsStatusService, private grpcServer:VSTestMainService) {
@@ -42,6 +44,34 @@ export class WorkerStatusComponent implements OnInit {
           this.lastSeenTime = element.lastSeen;
           this.registrationTime = element.registeredAt;
           this.workerLogs = element.logs;
+
+          // icons from https://fonts.google.com/icons
+          switch(element.status) {
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INVALID:
+              this.runningStatus = "report_gmailerrorred";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INTERNAL_ERROR:
+              this.runningStatus = "error";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_RUNNING_TEST:
+              this.runningStatus = "directions_run";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING:
+              this.runningStatus = "hourglass_empty";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_ERROR:
+              this.runningStatus = "running_with_errors";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_OK:
+              this.runningStatus = "check_circle_outline";
+              break;
+          }
+
       },
       (error) => {
         console.error(`[WorkerStatusComponent::getDataForWorker] Error occurred while trying to receive data from specific worker ! Error is: ${error}`);
