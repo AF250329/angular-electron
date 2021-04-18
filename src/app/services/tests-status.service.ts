@@ -61,9 +61,52 @@ export class TestsStatusService {
                 console.log('[TestsStatusService::getGlobalStatusStream] Observable is complete');
 
             } else {
-              observer.error(msg);
 
               console.error(`[TestsStatusService::getGlobalStatusStream] Error occurred while received data for "Global Live status". Error is: ${msg}`);
+
+              if (msg == '') {
+                switch(code) {
+                  case grpc.Code.Aborted:
+                    msg = '[10] connection aborted';
+                    break;
+                  case grpc.Code.AlreadyExists:
+                    msg = '[6] already exist';
+                    break;
+                  case grpc.Code.Canceled:
+                    msg = '[1] connection cancelled';
+                    break;
+                  case grpc.Code.DataLoss:
+                    msg = '[15] dataloss';
+                    break;
+                  case grpc.Code.DeadlineExceeded:
+                    msg = '[4] DeadlineExceeded';
+                    break;
+                  case grpc.Code.FailedPrecondition:
+                    msg = '[9] FailedPrecondition';
+                    break;
+                  case grpc.Code.Internal:
+                    msg = '[13] Internal';
+                    break;
+                  case grpc.Code.InvalidArgument:
+                    msg = '[3] InvalidArgument';
+                    break;
+                  case grpc.Code.NotFound:
+                    msg = '[5] NotFound';
+                    break;
+                  case grpc.Code.OutOfRange:
+                    msg = '[11] OutOfRange';
+                    break;
+                  case grpc.Code.PermissionDenied:
+                    msg = '[7] PermissionDenied';
+                    break;
+                  default:
+                    msg = `unknown error code: ${code}`;
+                    break;
+                }
+              }
+
+              observer.error(msg);
+
   //              this.healthStatusError(code, msg, trailers);
             }
           }});
@@ -108,10 +151,51 @@ export class TestsStatusService {
             console.log(`[TestsStatusService::getWorkersStatusStream] Observable is complete`);
 
           } else {
+            console.error(`[TestsStatusService::getWorkersStatusStream] Error occurred while receiving collection of workers.Error is: ${msg}`);
+
+            if (msg == '') {
+              switch(code) {
+                case grpc.Code.Aborted:
+                  msg = '[10] connection aborted';
+                  break;
+                case grpc.Code.AlreadyExists:
+                  msg = '[6] already exist';
+                  break;
+                case grpc.Code.Canceled:
+                  msg = '[1] connection cancelled';
+                  break;
+                case grpc.Code.DataLoss:
+                  msg = '[15] dataloss';
+                  break;
+                case grpc.Code.DeadlineExceeded:
+                  msg = '[4] DeadlineExceeded';
+                  break;
+                case grpc.Code.FailedPrecondition:
+                  msg = '[9] FailedPrecondition';
+                  break;
+                case grpc.Code.Internal:
+                  msg = '[13] Internal';
+                  break;
+                case grpc.Code.InvalidArgument:
+                  msg = '[3] InvalidArgument';
+                  break;
+                case grpc.Code.NotFound:
+                  msg = '[5] NotFound';
+                  break;
+                case grpc.Code.OutOfRange:
+                  msg = '[11] OutOfRange';
+                  break;
+                case grpc.Code.PermissionDenied:
+                  msg = '[7] PermissionDenied';
+                  break;
+                default:
+                  msg = `unknown error code: ${code}`;
+                  break;
+              }
+            }
+
             observer.error(msg);
           // this.healthStatusError(code, msg, trailers);
-
-            console.error(`[TestsStatusService::getWorkersStatusStream] Error occurred while receiving collection of workers.Error is: ${msg}`);
           }
         }
       });
@@ -159,10 +243,52 @@ export class TestsStatusService {
             console.log(`[TestsStatusService::getSpecificWorkerStatus] Observable is complete`);
 
           } else {
-            observer.error(msg);
-          // this.healthStatusError(code, msg, trailers);
 
             console.error(`[TestsStatusService::getSpecificWorkerStatus] Error occurred while trying to receive information about specific worker. Error is: ${msg}`);
+
+            if (msg == '') {
+              switch(code) {
+                case grpc.Code.Aborted:
+                  msg = '[10] connection aborted';
+                  break;
+                case grpc.Code.AlreadyExists:
+                  msg = '[6] already exist';
+                  break;
+                case grpc.Code.Canceled:
+                  msg = '[1] connection cancelled';
+                  break;
+                case grpc.Code.DataLoss:
+                  msg = '[15] dataloss';
+                  break;
+                case grpc.Code.DeadlineExceeded:
+                  msg = '[4] DeadlineExceeded';
+                  break;
+                case grpc.Code.FailedPrecondition:
+                  msg = '[9] FailedPrecondition';
+                  break;
+                case grpc.Code.Internal:
+                  msg = '[13] Internal';
+                  break;
+                case grpc.Code.InvalidArgument:
+                  msg = '[3] InvalidArgument';
+                  break;
+                case grpc.Code.NotFound:
+                  msg = '[5] NotFound';
+                  break;
+                case grpc.Code.OutOfRange:
+                  msg = '[11] OutOfRange';
+                  break;
+                case grpc.Code.PermissionDenied:
+                  msg = '[7] PermissionDenied';
+                  break;
+                default:
+                  msg = `unknown error code: ${code}`;
+                  break;
+              }
+            }
+
+            observer.error(msg);
+          // this.healthStatusError(code, msg, trailers);
           }
         }
       });

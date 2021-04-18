@@ -15,11 +15,27 @@ import { VisualLoadedTest } from './visual-loaded-test';
 })
 export class VSTestMainService {
 
-  grpcServerAddress: string = '';
+  private grpcServerAddress: string = '';
   selectedTestsFiles:Array<VisualStorageItem> = new Array<VisualStorageItem>();
 
   constructor() {
-    this.grpcServerAddress = AppConfig.GRPCWebServerAddress;
+    this.grpcServerAddress = this.GrpcServerAddress;
+  }
+
+  public get GrpcServerAddress() {
+    let addr:string = '';
+
+    if (window.localStorage.getItem('grpcServerAddress') != null) {
+      addr = window.localStorage.getItem('grpcServerAddress');
+    } else {
+      addr = AppConfig.GRPCWebServerAddress;
+    }
+
+    return addr;
+  }
+
+  public set GrpcServerAddress(address:string) {
+    window.localStorage.setItem('grpcServerAddress', address);
   }
 
   getGRPCServerStatus(serverAddress:string) : Observable<ServerHealthStatus> {
@@ -33,7 +49,7 @@ export class VSTestMainService {
         request: new Empty(),
         onMessage: (serverHealthStatus: ServerHealthStatus) => {
 
-          this.grpcServerAddress = serverAddress;
+          this.GrpcServerAddress = serverAddress;
 
           observer.next(serverHealthStatus);
 
@@ -46,10 +62,51 @@ export class VSTestMainService {
               observer.complete();
               console.log(`[VSTestMainService::getGRPCServerStatus] Observable complete`);
           } else {
+            console.error(`[VSTestMainService::getGRPCServerStatus] Error occurred while trying to receive 'health' data from server. Error is: ${msg}`);
+
+            if (msg == '') {
+              switch(code) {
+                case grpc.Code.Aborted:
+                  msg = '[10] connection aborted';
+                  break;
+                case grpc.Code.AlreadyExists:
+                  msg = '[6] already exist';
+                  break;
+                case grpc.Code.Canceled:
+                  msg = '[1] connection cancelled';
+                  break;
+                case grpc.Code.DataLoss:
+                  msg = '[15] dataloss';
+                  break;
+                case grpc.Code.DeadlineExceeded:
+                  msg = '[4] DeadlineExceeded';
+                  break;
+                case grpc.Code.FailedPrecondition:
+                  msg = '[9] FailedPrecondition';
+                  break;
+                case grpc.Code.Internal:
+                  msg = '[13] Internal';
+                  break;
+                case grpc.Code.InvalidArgument:
+                  msg = '[3] InvalidArgument';
+                  break;
+                case grpc.Code.NotFound:
+                  msg = '[5] NotFound';
+                  break;
+                case grpc.Code.OutOfRange:
+                  msg = '[11] OutOfRange';
+                  break;
+                case grpc.Code.PermissionDenied:
+                  msg = '[7] PermissionDenied';
+                  break;
+                default:
+                  msg = `unknown error code: ${code}`;
+                  break;
+              }
+            }
+
             observer.error(msg);
 //              this.healthStatusError(code, msg, trailers);
-
-            console.error(`[VSTestMainService::getGRPCServerStatus] Error occurred while trying to receive 'health' data from server. Error is: ${msg}`);
           }
         }
       });
@@ -63,7 +120,7 @@ export class VSTestMainService {
       storagePath.setPath(path);
 
       grpc.invoke(StorageBrowser.Get, {
-        host: this.grpcServerAddress,
+        host: this.GrpcServerAddress,
         request: storagePath,
         onMessage: (filesCollection: StorageItemCollection) => {
           const collection = filesCollection.getItemsList();
@@ -103,6 +160,48 @@ export class VSTestMainService {
             // All ok
             observer.complete();
           } else {
+
+            if (msg == '') {
+              switch(code) {
+                case grpc.Code.Aborted:
+                  msg = '[10] connection aborted';
+                  break;
+                case grpc.Code.AlreadyExists:
+                  msg = '[6] already exist';
+                  break;
+                case grpc.Code.Canceled:
+                  msg = '[1] connection cancelled';
+                  break;
+                case grpc.Code.DataLoss:
+                  msg = '[15] dataloss';
+                  break;
+                case grpc.Code.DeadlineExceeded:
+                  msg = '[4] DeadlineExceeded';
+                  break;
+                case grpc.Code.FailedPrecondition:
+                  msg = '[9] FailedPrecondition';
+                  break;
+                case grpc.Code.Internal:
+                  msg = '[13] Internal';
+                  break;
+                case grpc.Code.InvalidArgument:
+                  msg = '[3] InvalidArgument';
+                  break;
+                case grpc.Code.NotFound:
+                  msg = '[5] NotFound';
+                  break;
+                case grpc.Code.OutOfRange:
+                  msg = '[11] OutOfRange';
+                  break;
+                case grpc.Code.PermissionDenied:
+                  msg = '[7] PermissionDenied';
+                  break;
+                default:
+                  msg = `unknown error code: ${code}`;
+                  break;
+              }
+            }
+
             observer.error(msg);
   //              this.healthStatusError(code, msg, trailers);
           }
@@ -126,7 +225,7 @@ export class VSTestMainService {
       storageItem.setName(fileToScan.name);
 
       grpc.invoke(VSTestServer.ScanFile, {
-          host: this.grpcServerAddress,
+          host: this.GrpcServerAddress,
           request: storageItem,
           onMessage: (test: TestSpec) => {
             observer.next(test);
@@ -136,6 +235,48 @@ export class VSTestMainService {
               // All ok
               observer.complete();
             } else {
+
+              if (msg == '') {
+                switch(code) {
+                  case grpc.Code.Aborted:
+                    msg = '[10] connection aborted';
+                    break;
+                  case grpc.Code.AlreadyExists:
+                    msg = '[6] already exist';
+                    break;
+                  case grpc.Code.Canceled:
+                    msg = '[1] connection cancelled';
+                    break;
+                  case grpc.Code.DataLoss:
+                    msg = '[15] dataloss';
+                    break;
+                  case grpc.Code.DeadlineExceeded:
+                    msg = '[4] DeadlineExceeded';
+                    break;
+                  case grpc.Code.FailedPrecondition:
+                    msg = '[9] FailedPrecondition';
+                    break;
+                  case grpc.Code.Internal:
+                    msg = '[13] Internal';
+                    break;
+                  case grpc.Code.InvalidArgument:
+                    msg = '[3] InvalidArgument';
+                    break;
+                  case grpc.Code.NotFound:
+                    msg = '[5] NotFound';
+                    break;
+                  case grpc.Code.OutOfRange:
+                    msg = '[11] OutOfRange';
+                    break;
+                  case grpc.Code.PermissionDenied:
+                    msg = '[7] PermissionDenied';
+                    break;
+                  default:
+                    msg = `unknown error code: ${code}`;
+                    break;
+                }
+              }
+
               // Error occurred
               observer.error(msg);
             }
@@ -153,7 +294,7 @@ export class VSTestMainService {
       return new Observable( (observer) => {
 
         grpc.invoke(VSTestServer.RunTests, {
-            host: this.grpcServerAddress,
+            host: this.GrpcServerAddress,
             request: testSpecCollection,
             onMessage: (object) =>{
               observer.next('');
@@ -163,6 +304,48 @@ export class VSTestMainService {
                 // All ok
                 observer.complete();
               } else {
+
+                if (msg == '') {
+                  switch(code) {
+                    case grpc.Code.Aborted:
+                      msg = '[10] connection aborted';
+                      break;
+                    case grpc.Code.AlreadyExists:
+                      msg = '[6] already exist';
+                      break;
+                    case grpc.Code.Canceled:
+                      msg = '[1] connection cancelled';
+                      break;
+                    case grpc.Code.DataLoss:
+                      msg = '[15] dataloss';
+                      break;
+                    case grpc.Code.DeadlineExceeded:
+                      msg = '[4] DeadlineExceeded';
+                      break;
+                    case grpc.Code.FailedPrecondition:
+                      msg = '[9] FailedPrecondition';
+                      break;
+                    case grpc.Code.Internal:
+                      msg = '[13] Internal';
+                      break;
+                    case grpc.Code.InvalidArgument:
+                      msg = '[3] InvalidArgument';
+                      break;
+                    case grpc.Code.NotFound:
+                      msg = '[5] NotFound';
+                      break;
+                    case grpc.Code.OutOfRange:
+                      msg = '[11] OutOfRange';
+                      break;
+                    case grpc.Code.PermissionDenied:
+                      msg = '[7] PermissionDenied';
+                      break;
+                    default:
+                      msg = `unknown error code: ${code}`;
+                      break;
+                  }
+                }
+
                 // Error occurred
                 observer.error(msg);
               }
@@ -174,7 +357,7 @@ export class VSTestMainService {
   getLoadedTest() : Observable<VisualLoadedTest> {
     return new Observable( (observer) => {
       grpc.invoke(VSTestServer.GetAvailableTests, {
-        host: this.grpcServerAddress,
+        host: this.GrpcServerAddress,
         request: new Empty(),
         onMessage: (loadedTestsCollection: LoadedTestsCollection) => {
           loadedTestsCollection.getItemsList().forEach(element => {
@@ -191,6 +374,48 @@ export class VSTestMainService {
             // All ok
             observer.complete();
           } else {
+
+            if (msg == '') {
+              switch(code) {
+                case grpc.Code.Aborted:
+                  msg = '[10] connection aborted';
+                  break;
+                case grpc.Code.AlreadyExists:
+                  msg = '[6] already exist';
+                  break;
+                case grpc.Code.Canceled:
+                  msg = '[1] connection cancelled';
+                  break;
+                case grpc.Code.DataLoss:
+                  msg = '[15] dataloss';
+                  break;
+                case grpc.Code.DeadlineExceeded:
+                  msg = '[4] DeadlineExceeded';
+                  break;
+                case grpc.Code.FailedPrecondition:
+                  msg = '[9] FailedPrecondition';
+                  break;
+                case grpc.Code.Internal:
+                  msg = '[13] Internal';
+                  break;
+                case grpc.Code.InvalidArgument:
+                  msg = '[3] InvalidArgument';
+                  break;
+                case grpc.Code.NotFound:
+                  msg = '[5] NotFound';
+                  break;
+                case grpc.Code.OutOfRange:
+                  msg = '[11] OutOfRange';
+                  break;
+                case grpc.Code.PermissionDenied:
+                  msg = '[7] PermissionDenied';
+                  break;
+                default:
+                  msg = `unknown error code: ${code}`;
+                  break;
+              }
+            }
+
             // Error occurred
             observer.error(msg);
           }
