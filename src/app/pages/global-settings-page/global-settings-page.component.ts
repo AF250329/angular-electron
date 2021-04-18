@@ -21,6 +21,6 @@ export class GlobalSettingsPageComponent implements OnInit {
   }
 
   setAddress(address) {
-    this.grpcServer.grpcServerAddress = this.connectedAddress = address;
+    this.grpcServer.GrpcServerAddress = this.connectedAddress = address;
   }
 }

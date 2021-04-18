@@ -39,7 +39,7 @@ export class WorkerStatusComponent implements OnInit {
   }
 
   getDataForWorker(workerIpAddress: string) {
-    this.testsStatusService.getSpecificWorkerStatus(this.grpcServer.grpcServerAddress, workerIpAddress).subscribe(
+    this.testsStatusService.getSpecificWorkerStatus(this.grpcServer.GrpcServerAddress, workerIpAddress).subscribe(
       (element) => {
           this.lastSeenTime = element.lastSeen;
           this.registrationTime = element.registeredAt;

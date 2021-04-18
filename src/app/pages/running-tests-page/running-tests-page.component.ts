@@ -43,7 +43,7 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.grpcServerAddress = this.grpcServer.grpcServerAddress;
+    this.grpcServerAddress = this.grpcServer.GrpcServerAddress;
   }
 
   refreshData() {
@@ -69,7 +69,7 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
         console.error(`[RunningTestsPageComponent::refreshData] Error occurred when received elements: ${error}`);
       },
       () => {
-        console.error(`[RunningTestsPageComponent::refreshData] Observable complete`);
+        console.log(`[RunningTestsPageComponent::refreshData] Observable complete`);
       }
     );
 
