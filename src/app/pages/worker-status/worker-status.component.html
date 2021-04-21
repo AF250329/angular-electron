@@ -9,7 +9,7 @@
 
 <div class="clr-row">
   <div class="clr-col-2" style="padding: unset;">
-    <span style="margin-top: unset;">Registered at</span>
+    <span>Registered at</span>
   </div>
   <div class="clr-col-10">
     {{ registrationTime | date:'HH:mm:ss'}}
@@ -18,7 +18,7 @@
 
 <div class="clr-row">
   <div class="clr-col-2" style="padding: unset;">
-    <span style="margin-top: unset;">Last seen at</span>
+    <span>Last seen at</span>
   </div>
   <div class="clr-col-10">
     {{ lastSeenTime | date:'HH:mm:ss'}}
@@ -27,10 +27,11 @@
 
 <div class="clr-row">
   <div class="clr-col-2" style="padding: unset;">
-    <span style="margin-top: unset;">Current status</span>
+    <span>Current status</span>
   </div>
   <div class="clr-col-10">
     <span class="material-icons md-24">{{ runningStatus }}</span>
+    {{ runningStatusDescription }}
   </div>
 </div>
 

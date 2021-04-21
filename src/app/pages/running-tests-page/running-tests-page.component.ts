@@ -81,20 +81,36 @@ export class RunningTestsPageComponent implements OnInit, OnDestroy {
 
           // icons from https://fonts.google.com/icons
           switch(item.runningStatus) {
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_DOWNLOADING_FILES:
+              item.runningStatus = "downloading";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INTERNAL_ERROR:
+              item.runningStatus = "error";
+              break;
+
             case WorkerRunningStatus.WRK_RUNNING_STATUS_INVALID:
               item.runningStatus = "report_gmailerrorred";
               break;
 
-            case WorkerRunningStatus.WRK_RUNNING_STATUS_INTERNAL_ERROR:
-                item.runningStatus = "error";
-                break;
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_REQUESTING_JOB:
+              item.runningStatus = "find_in_page"
+              break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_RUNNING_TEST:
               item.runningStatus = "directions_run";
               break;
 
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_SHUTTING_DOWN:
+              item.runningStatus = "power_settings_new";
+              break;
+
             case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING:
               item.runningStatus = "hourglass_empty";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING_DONE:
+              item.runningStatus = "hourglass_full";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_ERROR:

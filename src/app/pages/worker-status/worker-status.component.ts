@@ -18,6 +18,7 @@ export class WorkerStatusComponent implements OnInit {
   lastSeenTime: Date;
   workerLogs:Array<string> = new Array<string>();
   runningStatus: string;
+  runningStatusDescription:string;
 
 
   constructor(private activatedRoute: ActivatedRoute, private testsStatusService:TestsStatusService, private grpcServer:VSTestMainService) {
@@ -47,28 +48,59 @@ export class WorkerStatusComponent implements OnInit {
 
           // icons from https://fonts.google.com/icons
           switch(element.status) {
-            case WorkerRunningStatus.WRK_RUNNING_STATUS_INVALID:
-              this.runningStatus = "report_gmailerrorred";
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_DONE_DOWNLOADING_FILES:
+              this.runningStatus = "download_done";
+              this.runningStatusDescription = "Done downloading files";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_DOWNLOADING_FILES:
+              this.runningStatus = "downloading";
+              this.runningStatusDescription = "Downloading files";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_INTERNAL_ERROR:
               this.runningStatus = "error";
+              this.runningStatusDescription = "Error";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_INVALID:
+              this.runningStatus = "report_gmailerrorred";
+              this.runningStatusDescription = "Invalid";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_REQUESTING_JOB:
+              this.runningStatus = "find_in_page"
+              this.runningStatusDescription = "Waiting for a new test";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_RUNNING_TEST:
               this.runningStatus = "directions_run";
+              this.runningStatusDescription = "Running/testing";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_SHUTTING_DOWN:
+              this.runningStatus = "power_settings_new";
+              this.runningStatusDescription = "Shutting down";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING:
               this.runningStatus = "hourglass_empty";
+              this.runningStatusDescription = "Starting";
+              break;
+
+            case WorkerRunningStatus.WRK_RUNNING_STATUS_STARTING_DONE:
+              this.runningStatus = "hourglass_full";
+              this.runningStatusDescription = "Done starting";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_ERROR:
               this.runningStatus = "running_with_errors";
+              this.runningStatusDescription = "Test finished with errors";
               break;
 
             case WorkerRunningStatus.WRK_RUNNING_STATUS_TEST_FINISHED_OK:
               this.runningStatus = "check_circle_outline";
+              this.runningStatusDescription = "Test finished OK";
               break;
           }
 
