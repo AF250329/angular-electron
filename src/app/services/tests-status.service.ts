@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { grpc } from "@improbable-eng/grpc-web";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
+import { Duration } from "google-protobuf/google/protobuf/duration_pb";
 import { Observable } from 'rxjs';
 import { LiveStatusData, TestsHost, WorkersStatusCollection, WorkerReport } from '../proto/VTestService_pb';
 import { WorkersSchedulerService } from '../proto/VTestService_pb_service';
@@ -32,7 +33,7 @@ export class TestsStatusService {
 
               visualLiveStatusData.etaTime = liveStatusData.getEtatime().toString();
 
-              visualLiveStatusData.maxExecutionTime = liveStatusData.getMaxexecutiontime().toString();
+              visualLiveStatusData.maxExecutionTime = liveStatusData.getMaxexecutiontime().toString()
 
               visualLiveStatusData.minExecutionTime = liveStatusData.getMinexecutiontime().toString();
 
