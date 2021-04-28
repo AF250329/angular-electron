@@ -31,7 +31,7 @@ export class TestsStatusService {
 
               visualLiveStatusData.avgExecutionTime = liveStatusData.getAvgexecutiontime().toString();
 
-              visualLiveStatusData.etaTime = liveStatusData.getEtatime().toString();
+              visualLiveStatusData.etaTime = new Date(liveStatusData.getEtatime().getSeconds() * 1000).toISOString().substr(11, 8);
 
               visualLiveStatusData.maxExecutionTime = liveStatusData.getMaxexecutiontime().toString()
 
